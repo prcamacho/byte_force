@@ -1,14 +1,17 @@
+from typing import Any
 from django.db import models
-from datetime import datetime
-from django.utils import timezone
+from django.contrib.auth.models import AbstractBaseUser,BaseUserManager
 # Create your models here.
 
-class Coordinador(models.Model):
-    nombre=models.CharField(max_length=50)
-    apellido=models.CharField(max_length=50)
-    numero_documento=models.PositiveBigIntegerField()
-    fecha_alta=models.DateTimeField(default=datetime.now())
+class Coordinador(AbstractBaseUser):
+    nombre=models.CharField(max_length=100)
+    apellido=models.CharField(max_length=100)
+    email=models.EmailField(max_length=100,unique=True)
+    dni= models.BigIntegerField(unique=True)
     activo=models.BooleanField(default=True)
-
+    fecha_alta=models.DateTimeField(auto_now_add=True)
+    
+    USERNAME_FIELD='email'
+    
     def __str__(self):
-        return f"{self.apellido.upper()}, {self.nombre.title()} [DNI: {self.numero_documento}]"
+        return f'{self.nombre} {self.apellido} {self.email}'

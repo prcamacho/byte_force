@@ -3,7 +3,9 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.contrib import messages
 from .models import Cliente
-from .forms import FormCliente, EditarFormCliente
+from .forms import FormCliente, EditarFormCliente,AuthCliente
+from .backend import BackEndCliente
+from django.contrib.auth import login,logout,authenticate
 
 # Create your views here.
 def nuevo_cliente(request):
@@ -14,6 +16,8 @@ def nuevo_cliente(request):
             cd=form.cleaned_data
             Cliente.objects.create(nombre=cd['nombre'],
                                     apellido=cd['apellido'],
+                                    dni=cd['dni'],
+                                    email=cd['email']
                                     )
             messages.success(request, "Cliente creado con éxito")
             return HttpResponseRedirect("/clientes/listado")       
@@ -49,3 +53,30 @@ def modificar_cliente(request,id):
     else:
         formulario = EditarFormCliente(instance=cliente)
     return render(request, 'clientes/nuevo.html', {'form': formulario}) 
+
+
+def log_in(request):
+    esta=request.user.is_authenticated
+    print(esta)
+    if esta:
+        redirect ("/home")
+    else:    
+        if request.method=='POST':
+            form=AuthCliente(request.POST)
+            if form.is_valid():
+                dni=form.cleaned_data.get('dni')
+                cliente=BackEndCliente().authenticate(request,dni=dni)
+                print(cliente)
+                if cliente is not None:
+                    login(request,cliente,backend='clientes.backend.BackEndCliente')
+                    redirect("/clientes/login") 
+                else:
+                    messages.error(request,'Cliente no encontrado')
+            else:
+                messages.error(request,'Usuario o contraseña no válido')        
+        form=AuthCliente()
+        return render(request,'usuario/cliente/nuevo.html',{'form':form})
+
+def log_out(request):
+    logout(request)
+    return redirect("/clientes/login") 

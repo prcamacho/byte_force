@@ -33,7 +33,8 @@ def nuevo_coordinador(request):
             cd=form.cleaned_data
             coordinador_nuevo=Coordinador.objects.create(nombre=cd['nombre'],
                                                          apellido=cd['apellido'],
-                                                         numero_documento=cd['numero_documento'],
+                                                         email=cd['email'],
+                                                         dni=cd['dni'],
                                                          )
             messages.success(request, "Coordinador creado con éxito")
             return HttpResponseRedirect("/coordinadores/listado")

@@ -1,15 +1,20 @@
 from django.db import models
-from django import forms
+from django.contrib.auth.models import AbstractBaseUser
 # Create your models here.
 
 #Modelo del objeto Empleado
 
-class Empleado (models.Model):
-    nombre = models.CharField(max_length=20)
-    apellido = models.CharField(max_length=20)
-    numero_legajo = models.IntegerField()
-    activo = models.BooleanField(default=True)
+class Empleado(AbstractBaseUser):
+    nombre=models.CharField(max_length=100)
+    apellido=models.CharField(max_length=100)
+    email=models.EmailField(max_length=100,unique=True)
+    dni= models.BigIntegerField(unique=True)
+    numero_legajo=models.PositiveIntegerField(unique=True)
+    activo=models.BooleanField(default=True)
+    fecha_alta=models.DateTimeField(auto_now_add=True)
+    
+    USERNAME_FIELD='email'
     
     def __str__(self):
-        return F"{self.nombre}, {self.apellido}, {self.numero_legajo}"
+        return f'{self.nombre} {self.apellido} {self.email}'
     

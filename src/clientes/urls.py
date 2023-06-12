@@ -12,4 +12,6 @@ urlpatterns = [
     path('activar/<int:id>/',activar_cliente,name='activar_cliente'),
     path('listado/',listado_clientes,name='listado_clientes'),
     path('modificar/<int:id>/',modificar_cliente,name='modificar_cliente'),
+    path('login',log_in,name='log_in'),    
+    path('logout/',log_out,name='log_out'),
 ]

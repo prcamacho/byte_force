@@ -1,11 +1,12 @@
 from django import forms
 from .models import Empleado
-#from django.forms import ModelForm
-#Creacion de formulario 
-class FormularioEmpleado(forms.Form):
-    nombre = forms.CharField(max_length=20)
-    apellido = forms.CharField(max_length=20)
-    numero_legajo = forms.IntegerField()
+
+class FormEmpleado(forms.Form):
+    nombre=forms.CharField(max_length=100, label='Nombres')
+    apellido=forms.CharField(max_length=100, label='Apellidos')
+    email=forms.EmailField(max_length=100,label='Email')
+    dni=forms.IntegerField(label='DNI')
+    numero_legajo=forms.IntegerField(label='Numero de Legajo')
     
 class EditarFormularioEmpleado(forms.ModelForm):
     class Meta:

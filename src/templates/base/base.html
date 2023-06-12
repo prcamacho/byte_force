@@ -35,6 +35,15 @@
                     <a class="nav-link fs-4 ms-2 text-dark{% if 'servicios' in request.path %}  bg-dark text-white rounded-1{% endif %}" href="{% url 'servicios:listado_servicios' %}">Servicios</a>
                   </li>
                 </ul>
+                {% if user.is_authenticated %}
+<p >Hola,{{user.nombre}}!!!</p>
+<p >Hola,{{user.email}}!!!</p>
+<p >Hola,{{user.apellido}}!!!</p>
+<p >Hola,{{user.dni}}!!!</p>
+<p>
+{% else %}
+<p>dale registrate</p>
+    {% endif %}
               </div>
             </div>
           </nav>

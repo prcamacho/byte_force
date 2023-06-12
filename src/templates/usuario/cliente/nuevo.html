@@ -1,0 +1,33 @@
+{% extends 'base/base.html' %}
+{% comment %} {% block javascript %}
+<script> 
+  //Cuadro de diálogo de confirmación en JavaScript
+  function aviso()
+  {
+    alert("Registro con éxito agregado con éxito!!!");
+  }
+</script>
+{% endblock javascript %} {% endcomment %}
+{% block contenido %} 
+
+{% if user.is_authenticated %}
+<p >Hola,{{user.nombre}}!!!</p>
+<p >Hola,{{user.email}}!!!</p>
+<p >Hola,{{user.apellido}}!!!</p>
+<p >Hola,{{user.dni}}!!!</p>
+<p>
+{% else %}
+<p>dale registrate</p>
+    {% endif %}
+
+<div class="container-fluid" style="margin-top:30px">
+    <div class="container-fluid card w-75 bg-primary-subtle">
+<h1 class="fs-1 text-center" style="margin-top:30px">Cliente</h1>
+<form method="POST" action=""  onSubmit="aviso()">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="botones btn btn-success">Guardar</button>
+</form>
+</div>
+</div>
+{% endblock contenido %}

@@ -17,6 +17,8 @@
         <td>ID</td>
         <td>Nombre</td>
         <td>Apellido</td>
+        <td>DNI</td>
+        <td>Correo</td>
         <td>Acciones</td>
       </tr>
     
@@ -25,6 +27,8 @@
           <td class="fs-6 fw-semibold">{{cliente.id}}</td>
           <td class="fs-6 fw-semibold">{{cliente.nombre}}</td>
           <td class="fs-6 fw-semibold">{{cliente.apellido}}</td>
+          <td class="fs-6 fw-semibold">{{cliente.dni}}</td>
+          <td class="fs-6 fw-semibold">{{cliente.email}}</td>
           <td>
             {% if cliente.activo %}
               <a href="{% url 'clientes:desactivar_cliente' cliente.id %}" class="btn btn-danger rounded-start-pill">

@@ -1,5 +1,5 @@
 from django import forms
-from .models import ReservaServicio
+from .models import Reserva
 from clientes.models import Cliente
 from coordinadores.models import Coordinador
 from empleados.models import Empleado
@@ -15,7 +15,7 @@ class FormReserva(forms.Form):
 
 class EditarFormReserva(forms.ModelForm):
     class Meta:
-        model = ReservaServicio
+        model = Reserva
         fields = ['fecha_reserva','cliente','responsable','empleado','servicio','precio']
         widgets = {
             'fecha_reserva':forms.widgets.DateInput(attrs={'type': 'datetime-local'}),

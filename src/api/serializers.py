@@ -1,8 +1,9 @@
 from rest_framework import serializers
+from clientes.models import Cliente
+from coordinadores.models import Coordinador
+from empleados.models import Empleado
+from servicios.models import Servicio
 from servicios.models import *
-from clientes.models import *
-from empleados.models import *
-from coordinadores.models import * 
 
 class ServicioSerializer(serializers.ModelSerializer):
     class Meta:

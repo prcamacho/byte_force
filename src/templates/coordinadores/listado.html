@@ -13,6 +13,7 @@
         <td>ID</td>
         <td>Nombre</td>
         <td>Apellido</td>
+        <td>Email</td>
         <td>DNI</td>
         <td>Acciones</td>
       </tr>
@@ -21,7 +22,8 @@
         <th class="fs-6 fw-semibold">{{coordinador.id}} </th>
         <th class="fs-6 fw-semibold">{{coordinador.nombre}}</th>
         <th class="fs-6 fw-semibold">{{coordinador.apellido}}</th>
-        <th class="fs-6 fw-semibold">{{coordinador.numero_documento}}</th>
+        <th class="fs-6 fw-semibold">{{coordinador.email}}</th>
+        <th class="fs-6 fw-semibold">{{coordinador.dni}}</th>
         <th>
             {%if coordinador.activo %}
             <a href="{% url 'coordinadores:desactivar_coordinador' coordinador.id %}"><button type="button" class="btn btn-danger rounded-start-pill"><i class="bi bi-person-fill-slash"></i> Desactivar</button></a>
