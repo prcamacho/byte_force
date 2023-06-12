@@ -10,5 +10,4 @@ urlpatterns = [
     path('modificar/<int:id>/', modificar_reserva,name='modificar_reserva'),
     path('listado/',listado_reservas,name='listado_reservas'),
     path('eliminar/<int:id>/',eliminar_reserva,name='eliminar_reserva'),
-    path('menu',reservas_user_cliente,name='reservas_user_cliente'),
 ]

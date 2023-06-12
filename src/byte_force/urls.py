@@ -28,5 +28,6 @@ urlpatterns = [
     path('reservas/',include('reservas.urls',namespace='reservas')),
     path('servicios/',include('servicios.urls',namespace='servicios')),
     path('api/',include('api.urls',namespace='api')),
-    path('auth/',include('auth.urls')),
+    path('menu/',include('menu_cliente.urls')),
+    
 ]

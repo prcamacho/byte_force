@@ -1,5 +1,10 @@
 {% block contenido %}
 
+{% if user.is_authenticated %}
+<h1>Hola,{{user.nombre}}!!!</h1>
+{% endif %}
+<a href="{% url 'menu:log_out' %}"><button class="botones btn btn-primary mb-5">Cerrar Sesión</button></a>
+
 {% for reserva in reservas %}
 
     <p>{{reserva.servicio}}</p>

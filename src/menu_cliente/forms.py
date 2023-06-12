@@ -1,6 +1,6 @@
 from typing import Any
 from django import forms
-from .models import Cliente
+from clientes.models import Cliente
 from django.contrib.auth.forms import UserChangeForm, AuthenticationForm
 
 class FormCliente(UserChangeForm):
@@ -24,4 +24,6 @@ class EditarFormCliente(forms.ModelForm):
     class Meta:
         model = Cliente
         fields = ["nombre","apellido","email","dni"]    
-    
+        
+class AuthCliente(forms.Form):
+    dni=forms.IntegerField(label='Ingrese su DNI')   

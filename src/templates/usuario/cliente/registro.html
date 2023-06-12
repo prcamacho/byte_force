@@ -10,19 +10,11 @@
 {% endblock javascript %} {% endcomment %}
 {% block contenido %} 
 
-{% for mesage in messages %}
-<p>{{messsage}}</p>
-{% endfor %}
-
-{% if user.is_authenticated %}
-<p >Hola,{{user.nombre}}!!!</p>
-<p >Hola,{{user.email}}!!!</p>
-<p >Hola,{{user.apellido}}!!!</p>
-<p >Hola,{{user.dni}}!!!</p>
-<p>
+{% comment %} {% if user.is_authenticated %}
+<h1>Hola,{{user.nombre}}!!!</h1>
 {% else %}
-<p>dale registrate</p>
-    {% endif %}
+<h1>Registrese</h1>
+{% endif %} {% endcomment %}
 
 <div class="container-fluid" style="margin-top:30px">
     <div class="container-fluid card w-75 bg-primary-subtle">

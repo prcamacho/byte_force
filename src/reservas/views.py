@@ -44,8 +44,3 @@ def eliminar_reserva(request,id):
     reserva = get_object_or_404(Reserva, id=id)
     reserva.delete()
     return redirect('reservas:listado_reservas')
-
-
-def reservas_user_cliente(request):
-    reservas=Reserva.objects.filter(cliente=request.user)
-    return render(request, 'usuario/cliente/menu.html',{'reservas':reservas})

@@ -1,11 +1,10 @@
 from django.shortcuts import render,get_object_or_404,redirect
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib import messages
 from .models import Cliente
-from .forms import FormCliente, EditarFormCliente,AuthCliente
-from .backend import BackEndCliente
-from django.contrib.auth import login,logout,authenticate
+from .forms import FormCliente, EditarFormCliente
+
 
 # Create your views here.
 def nuevo_cliente(request):
@@ -54,27 +53,3 @@ def modificar_cliente(request,id):
         formulario = EditarFormCliente(instance=cliente)
     return render(request, 'clientes/nuevo.html', {'form': formulario}) 
 
-
-def log_in(request):
-    if request.user.is_authenticated:
-        redirect ("/home")
-    else:    
-        if request.method=='POST':
-            form=AuthCliente(request.POST)
-            if form.is_valid():
-                dni=form.cleaned_data.get('dni')
-                cliente=BackEndCliente().authenticate(request,dni=dni)
-                print(cliente)
-                if cliente is not None:
-                    login(request,cliente,backend='clientes.backend.BackEndCliente')
-                    redirect("/home") 
-                else:
-                    messages.error(request,'DNI no registrado, por favor Registrese')
-            else:
-                messages.error(request,'Usuario o contraseña no válido')        
-        form=AuthCliente()
-        return render(request,'usuario/cliente/nuevo.html',{'form':form})
-
-def log_out(request):
-    logout(request)
-    return redirect("/clientes/login") 
