@@ -1,0 +1,10 @@
+{% block contenido %}
+
+{% for reserva in reservas %}
+
+    <p>{{reserva.servicio}}</p>
+    <p>{{reserva.fecha_reserva}}</p>
+
+{% endfor %}
+
+{% endblock contenido %}

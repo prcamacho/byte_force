@@ -10,6 +10,10 @@
 {% endblock javascript %} {% endcomment %}
 {% block contenido %} 
 
+{% for mesage in messages %}
+<p>{{messsage}}</p>
+{% endfor %}
+
 {% if user.is_authenticated %}
 <p >Hola,{{user.nombre}}!!!</p>
 <p >Hola,{{user.email}}!!!</p>

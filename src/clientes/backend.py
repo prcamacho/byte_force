@@ -8,7 +8,9 @@ from .models import Cliente
 class BackEndCliente(BaseBackend):
     def authenticate(self, request: HttpRequest, dni: str):
         try:
-            cliente = Cliente.objects.get(dni=dni)
+            cliente = Cliente.objects.get(dni=dni,activo=True)
+            if cliente.activo==False:
+                raise ValueError("el cliente no está activo, comuniquese con el programador")
         except Cliente.DoesNotExist:
             return None
         #     # Crea un nuevo usuario. No es necesario establecer una contraseña

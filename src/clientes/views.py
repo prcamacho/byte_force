@@ -56,9 +56,7 @@ def modificar_cliente(request,id):
 
 
 def log_in(request):
-    esta=request.user.is_authenticated
-    print(esta)
-    if esta:
+    if request.user.is_authenticated:
         redirect ("/home")
     else:    
         if request.method=='POST':
@@ -69,9 +67,9 @@ def log_in(request):
                 print(cliente)
                 if cliente is not None:
                     login(request,cliente,backend='clientes.backend.BackEndCliente')
-                    redirect("/clientes/login") 
+                    redirect("/home") 
                 else:
-                    messages.error(request,'Cliente no encontrado')
+                    messages.error(request,'DNI no registrado, por favor Registrese')
             else:
                 messages.error(request,'Usuario o contraseña no válido')        
         form=AuthCliente()
