@@ -1,3 +1,4 @@
+{% extends 'base/base_cliente.html' %}
 {% block contenido %} 
 
 {% comment %} {% if user.is_authenticated %}
@@ -6,14 +7,23 @@
 <p>Registrese</p>
 {% endif %} {% endcomment %}
 
+    
 <div class="container-fluid" style="margin-top:30px">
     <div class="container-fluid card w-75 bg-primary-subtle">
-<h1 class="fs-1 text-center" style="margin-top:30px">Cliente</h1>
+    {% if messages %}
+                {% for msg in messages %}
+                    <p class="alert-mensaje alert-{{msg.tags}}">{{msg}}</p>
+                {% endfor %}
+    {% endif %}
+
+<h1 class="fs-1 text-center" style="margin-top:30px">Ingresar</h1>
 <form method="POST" action=""  onSubmit="aviso()">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" class="botones btn btn-success">Guardar</button>
+    <button type="submit" class="botones btn btn-success">Ingresar</button>
 </form>
+<a href="{% url 'menu:registrar_cliente' %}"><button class="botones btn btn-primary">Registrarse</button></a>
+    
 </div>
 </div>
 {% endblock contenido %}

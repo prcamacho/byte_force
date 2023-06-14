@@ -11,28 +11,34 @@
         <link rel="stylesheet" href="{% static 'css/forms.css' %}"/>
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg sticky-top bg-primary" style="--bs-bg-opacity: .8;">
+        <nav class="navbar navbar-expand-lg sticky-top bg-primary" style="--bs-bg-opacity: .7;">
             <div class="container-fluid">
               <a class="navbar-brand fs-3  fw-semibold ms-3" href="{% url 'vista_inicio' %}"><i class="bi bi-house-fill"></i> Home</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
-              <div class="collapse navbar-collapse" id="navbarNav">
+              <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
+                  {% if user.is_authenticated %}
                   <li class="nav-item">
-                    <a class="nav-link fs-4 ms-2 text-dark{% if 'clientes' in request.path %} bg-dark text-white rounded-1{% endif %}" aria-current="page" href="{% url 'clientes:listado_clientes' %}">Clientes</a>
+                    <a class="nav-link fs-4 ms-2 text-light" href="{% url 'menu:reservas_user_cliente' %}">Hola, {{user.nombre}}!!! </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link fs-4 ms-2 text-dark{% if 'coordinador' in request.path %}  bg-dark text-white rounded-1{% endif %}" href="{% url 'coordinadores:listado_coordinadores' %}">Coordinadores</a>
+                    <a class="btn btn-danger m-2 fs-5" style="opacity:1;" href="{% url 'menu:log_out' %}">Cerrar Sesión</a>
+                  </li>
+                  {% else %}
+                  <li class="nav-item">
+                    <a class="btn btn-success m-2 fs-5" href="{% url 'menu:log_in' %}">Ingresar</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link fs-4 ms-2 text-dark{% if 'empleados' in request.path %}  bg-dark text-white rounded-1{% endif %}" href="{% url 'empleados:listado_empleados' %}">Empleados</a>
+                    <a class="btn btn-info m-2 fs-5 " href="{% url 'menu:registrar_cliente' %}">Registro</a>
+                  </li>
+                  {% endif %}
+                  <li class="nav-item">
+                    <a class="btn btn-primary m-2 fs-5" style="" href="{% url 'menu:reservas_user_cliente' %}">Reservar</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link fs-4 ms-2 text-dark{% if 'reservas' in request.path %}  bg-dark text-white rounded-1{% endif %}" href="{% url 'reservas:listado_reservas' %}">Reservas</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link fs-4 ms-2 text-dark{% if 'servicios' in request.path %}  bg-dark text-white rounded-1{% endif %}" href="{% url 'servicios:listado_servicios' %}">Servicios</a>
+                    <a class="btn btn-dark m-2 fs-5" href="">Contacto</a>
                   </li>
                 </ul>
               </div>

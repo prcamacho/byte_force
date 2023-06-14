@@ -11,9 +11,9 @@
 <form method="POST" action=""  onSubmit="aviso()">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" class="botones btn btn-success">Guardar</button>
+    <button type="submit" class="botones btn btn-success">Confirmar</button>
 </form>
-<a href="/menu" class="botones btn btn-danger">Cancelar</a>
+    <a href="/menu" class="botones btn btn-danger">Cancelar</a>
 </div>
 </div>
 {% endblock contenido %}

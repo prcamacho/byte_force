@@ -1,15 +1,36 @@
+{% extends 'base/base_cliente.html' %}
 {% block contenido %}
+<div class="container">
+  <div class="d-flex justify-content-end">
+    <a href="{% url 'menu:hacer_reserva' %}" class="btn btn-success m-2" >Reservar</a>
+    <a href="{% url 'menu:modificar_cliente' %}" class="btn btn-danger m-2" >Modificar Datos</a>
+  </div>
 
-{% if user.is_authenticated %}
-<h1>Hola,{{user.nombre}}!!!</h1>
-{% endif %}
-<a href="{% url 'menu:log_out' %}"><button class="botones btn btn-primary mb-5">Cerrar Sesión</button></a>
+  <div class="container">
+    <table class="table table-hover text-center">
+      <tbody>
+        <tr class="table-secondary fs-4  fw-semibold">
+          <td class="">Servicio</td>
+          <td class="">Fecha de Reserva</td>
+          <td class="">Acciones</td>
+        </tr>
+        {% for reserva in reservas %}
+          <tr class="align-text-bottom">
+            <td class="fs-6  fw-semibold">{{reserva.servicio}}</td>
+            <td class="fs-6  fw-semibold">{{reserva.fecha_reserva}}</td>
+            <td>
+              {% if reserva.activo %}
+                <a href="{% url 'menu:desactivar_reserva' reserva.id %}" class="btn btn-danger rounded-start">
+                  <i class="bi bi-clipboard2-x-fill"></i> Cancelar
+                </a>
+              {% endif %}
+                <a href="{% url 'menu:modificar_reserva_user' reserva.id %}" class="btn btn-dark" >Modificar Datos</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
 
-{% for reserva in reservas %}
-
-    <p>{{reserva.servicio}}</p>
-    <p>{{reserva.fecha_reserva}}</p>
-
-{% endfor %}
-
+  </div>
+</div>
 {% endblock contenido %}

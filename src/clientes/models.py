@@ -10,6 +10,7 @@ class Cliente(AbstractBaseUser):
     dni= models.BigIntegerField(unique=True)
     activo=models.BooleanField(default=True)
     fecha_alta=models.DateTimeField(auto_now_add=True)
+    empleado=models.BooleanField(default=False)
     
     USERNAME_FIELD='dni'
     
