@@ -20,6 +20,7 @@ class Coordinador(AbstractBaseUser):
     email = models.EmailField(max_length=100, unique=True)
     dni = models.BigIntegerField(unique=True)
     activo = models.BooleanField(default=True)
+    empleado=models.BooleanField(default=True)
     fecha_alta = models.DateTimeField(auto_now_add=True)
     
     USERNAME_FIELD = 'email'

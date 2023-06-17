@@ -137,7 +137,7 @@ def desactivar_reserva(request,pk):
     return redirect ("/menu")    
 
 def modificar_reserva_user(request,id):
-    reserva = get_object_or_404(Reserva, id=id)
+    reserva = get_object_or_404(Reserva, id=id,cliente=request.user)
     if request.method == 'POST':
         formulario = FormReserva(request.POST, instance=reserva)
         if formulario.is_valid():

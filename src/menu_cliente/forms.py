@@ -33,14 +33,6 @@ class EditarFormCliente(forms.ModelForm):
 class AuthCliente(forms.Form):
     dni=forms.IntegerField(label='Ingrese su DNI')   
 
-# class FormReserva(forms.Form):
-#     fecha_reserva=forms.DateTimeField(widget=forms.widgets.DateInput(attrs={'type': 'datetime-local'}))
-#     cliente=forms.ModelChoiceField(queryset=Cliente.objects.filter(activo=True))
-#     responsable=forms.ModelChoiceField(queryset=Coordinador.objects.filter(activo=True))
-#     empleado=forms.ModelChoiceField(queryset=Empleado.objects.filter(activo=True))
-#     servicio=forms.ModelChoiceField(queryset=Servicio.objects.filter(activo=True))
-#     precio=forms.DecimalField(decimal_places=2, max_digits=10)
-
     
 class FormReserva(forms.ModelForm):
     class Meta:

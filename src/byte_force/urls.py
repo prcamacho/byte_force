@@ -29,5 +29,6 @@ urlpatterns = [
     path('servicios/',include('servicios.urls',namespace='servicios')),
     path('api/',include('api.urls',namespace='api')),
     path('menu/',include('menu_cliente.urls')),
+    path('administracion/',include('menu_empleado.urls')),
     
 ]

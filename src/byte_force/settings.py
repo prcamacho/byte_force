@@ -47,11 +47,13 @@ INSTALLED_APPS = [
     'api',
     'rest_framework',
     'menu_cliente',
+    'menu_empleado'
 ]
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'menu_cliente.backend.BackEndCliente',
+    'menu_empleado.backend.BackEndEmpleado',
 ]
 
 MIDDLEWARE = [
@@ -87,6 +89,8 @@ TEMPLATES = [
 	    "APP_DIRS": True,
     }
 ]
+
+AUTH_USER_MODEL= 'menu_empleado.models.MyUserManage'
 
 WSGI_APPLICATION = 'byte_force.wsgi.application'
 
