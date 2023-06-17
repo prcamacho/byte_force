@@ -17,7 +17,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from .views import vista_inicio
-
+#Capturar error 404
+from django.conf.urls import handler404,handler400,handler500
+from.views import error_404, error_400
 urlpatterns = [
     path('',view=vista_inicio, name='vista_inicio'),
     path('home/',view=vista_inicio, name='vista_inicio'),
@@ -31,3 +33,6 @@ urlpatterns = [
     path('menu/',include('menu_cliente.urls')),
     
 ]
+
+handler404 = error_404
+handler400 = error_400

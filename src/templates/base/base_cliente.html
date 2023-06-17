@@ -44,6 +44,8 @@
               </div>
             </div>
           </nav>
+      {% block errores %}
+      {% endblock errores %}
     <section id="principal">
 {% block contenido %}
 
@@ -69,6 +71,7 @@
     </footer>
     <link rel="stylesheet" href="{% static 'js/bootstrap.min.js' %}"/>
     </body>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@0.4.0/dist/lottie-player.js"></script>
     
     {% block javascript %}
     
