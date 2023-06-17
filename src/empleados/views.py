@@ -1,35 +1,66 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponseRedirect,HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse
 from .formulario import FormEmpleado, EditarFormularioEmpleado
 from .models import Empleado
 from django.contrib import messages
 from django.forms import ModelForm
 
 
-# Create your views here.
-
 def nuevo_empleado(request):
-    
+    """
+    Vista para crear un nuevo empleado.
+
+    Permite agregar un empleado mediante el formulario proporcionado.
+    Si los datos son válidos, se crea un nuevo objeto Empleado con los valores proporcionados.
+
+    Parámetros:
+    - request: La solicitud HTTP recibida.
+
+    Retorna:
+    - Si la solicitud es GET, renderiza el formulario vacío.
+    - Si la solicitud es POST y los datos del formulario son válidos, redirige a la página de listado de empleados.
+    - Si la solicitud es POST y los datos del formulario no son válidos, renderiza el formulario con los errores.
+
+    Plantilla:
+    - empleados/nuevo.html
+    """
     if request.method == "POST":
-        
         formulario = FormEmpleado(request.POST)
-        
         if formulario.is_valid():
             cd = formulario.cleaned_data
-            
-            Empleado.objects.create(nombre = cd['nombre'],
-                                    apellido = cd['apellido'],
-                                    email=cd['email'],
-                                    dni=cd['dni'],                 
-                                    numero_legajo = cd ['numero_legajo'])
-            messages.success(request, "Empleado agregado con exito")
-            return HttpResponseRedirect ("/empleados/listado")
-        
+            Empleado.objects.create(
+                nombre=cd['nombre'],
+                apellido=cd['apellido'],
+                email=cd['email'],
+                dni=cd['dni'],
+                numero_legajo=cd['numero_legajo']
+            )
+            messages.success(request, "Empleado agregado con éxito")
+            return HttpResponseRedirect("/empleados/listado")
     else:
         formulario = FormEmpleado()
-    return render(request, 'empleados/nuevo.html',{"form":formulario})
+    return render(request, 'empleados/nuevo.html', {"form": formulario})
 
-def modificar_empleado (request, id):
+
+def modificar_empleado(request, id):
+    """
+    Vista para modificar un empleado existente.
+
+    Permite editar los datos de un empleado existente mediante el formulario proporcionado.
+    Si los datos son válidos, se actualiza el objeto Empleado con los nuevos valores.
+
+    Parámetros:
+    - request: La solicitud HTTP recibida.
+    - id: El ID del empleado a modificar.
+
+    Retorna:
+    - Si la solicitud es GET, renderiza el formulario con los datos del empleado.
+    - Si la solicitud es POST y los datos del formulario son válidos, redirige a la página de listado de empleados.
+    - Si la solicitud es POST y los datos del formulario no son válidos, renderiza el formulario con los errores.
+
+    Plantilla:
+    - empleados/nuevo.html
+    """
     empleado = get_object_or_404(Empleado, id=id)
     if request.method == 'POST':
         formulario = EditarFormularioEmpleado(request.POST, instance=empleado)
@@ -38,26 +69,68 @@ def modificar_empleado (request, id):
             return HttpResponseRedirect("/empleados/listado")
     else:
         formulario = EditarFormularioEmpleado(instance=empleado)
-        return render(request, 'empleados/nuevo.html', {'form': formulario}) 
-    
+    return render(request, 'empleados/nuevo.html', {'form': formulario})
+
+
 def activar_empleado(request, id):
+    """
+    Vista para activar un empleado desactivado.
+
+    Permite activar un empleado desactivado cambiando el estado "activo" a True.
+
+    Parámetros:
+    - request: La solicitud HTTP recibida.
+    - id: El ID del empleado a activar.
+
+    Retorna:
+    - Redirige a la página de listado de empleados.
+
+    Plantilla:
+    - No se utiliza.
+    """
     empleado = get_object_or_404(Empleado, id=id)
     if empleado.activo == False:
-        empleado.activo=True
+        empleado.activo = True
         empleado.save()
-        #messages.success(request, "Empleado activado con exito")
-    #else:
-        #messages.success(request, "Empleado ya esta activo")
-    return HttpResponseRedirect ("/empleados/listado")
+    return HttpResponseRedirect("/empleados/listado")
 
-def desactivar_empleado(request,pk):
-    empleado=get_object_or_404(Empleado,id=pk)
-    empleado.activo=False
+
+def desactivar_empleado(request, pk):
+    """
+    Vista para desactivar un empleado activo.
+
+    Permite desactivar un empleado activo cambiando el estado "activo" a False.
+
+    Parámetros:
+    - request: La solicitud HTTP recibida.
+    - pk: El ID del empleado a desactivar.
+
+    Retorna:
+    - Redirige a la página de listado de empleados.
+
+    Plantilla:
+    - No se utiliza.
+    """
+    empleado = get_object_or_404(Empleado, id=pk)
+    empleado.activo = False
     empleado.save()
-    return HttpResponseRedirect ("/empleados/listado")
+    return HttpResponseRedirect("/empleados/listado")
+
 
 def listado_empleados(request):
-    empleados=Empleado.objects.all()
-    return render(request,'empleados/listado.html',{'empleados':empleados})
+    """
+    Vista para mostrar el listado de empleados.
 
-    
+    Obtiene todos los empleados registrados y los pasa como contexto a la plantilla de listado.
+
+    Parámetros:
+    - request: La solicitud HTTP recibida.
+
+    Retorna:
+    - Renderiza la plantilla de listado de empleados con el contexto.
+
+    Plantilla:
+    - empleados/listado.html
+    """
+    empleados = Empleado.objects.all()
+    return render(request, 'empleados/listado.html', {'empleados': empleados})

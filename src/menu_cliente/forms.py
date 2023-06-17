@@ -7,6 +7,8 @@ from clientes.models import Cliente
 from empleados.models import Empleado
 from servicios.models import Servicio
 from coordinadores.models import Coordinador
+#VALIDACIONES
+from .validations import *
 
 class FormCliente(UserChangeForm):
     password=None
@@ -24,11 +26,21 @@ class FormCliente(UserChangeForm):
             'email':'Email',
             'dni':'DNI'
         }
+    def clean_dni(self):
+        dni=self.cleaned_data.get('dni')
+        validar_dni(dni)
+        return dni
+
 
 class EditarFormCliente(forms.ModelForm):
     class Meta:
         model = Cliente
         fields = ["nombre","apellido","email","dni"]    
+    
+    def clean_dni(self):
+        dni=self.cleaned_data.get('dni')
+        validar_dni(dni)
+        return dni
         
 class AuthCliente(forms.Form):
     dni=forms.IntegerField(label='Ingrese su DNI')   
@@ -49,3 +61,7 @@ class FormReserva(forms.ModelForm):
         widgets = {
             'fecha_reserva':forms.widgets.DateInput(attrs={'type': 'datetime-local'}),
         }
+    def clean_fecha_reserva(self):
+        fecha_reserva = self.cleaned_data['fecha_reserva']
+        validar_fecha_posterior(fecha_reserva)
+        return fecha_reserva
