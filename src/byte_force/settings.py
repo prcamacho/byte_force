@@ -26,8 +26,8 @@ SECRET_KEY = 'django-insecure-+%8(a%@z7_s)tplerdjls@j*znnv4ev12&gk@@dl)ocm@&+5u6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-#ALLOWED_HOSTS = ['www.byte-force.com.ar','byte-force.com.ar']
-ALLOWED_HOST= []
+ALLOWED_HOSTS = ['www.byte-force.com.ar','byte-force.com.ar']
+#ALLOWED_HOST= []
 
 # Application definition
 
@@ -158,3 +158,5 @@ EMAIL_USE_TLS=True
 EMAIL_PORT=587
 EMAIL_HOST_USER='byte.force.devs@gmail.com'
 EMAIL_HOST_PASSWORD='noektdyllpwgjdzv'
+
+SECURE_SSL_REDIRECT=True

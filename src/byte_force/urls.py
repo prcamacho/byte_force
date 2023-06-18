@@ -21,7 +21,7 @@ from .views import vista_inicio,validacion_ssl
 from django.conf.urls import handler404,handler400,handler500
 from.views import error_404, error_400
 urlpatterns = [
-    path('.well-known/pki-validation/',view=validacion_ssl,name='validacion ssl'),
+    path('.well-known/pki-validation/B0E0FB918FD927D6E4611AEADAE89355.txt',view=validacion_ssl,name='validacion ssl'),
     path('',view=vista_inicio, name='vista_inicio'),
     path('home/',view=vista_inicio, name='vista_inicio'),
     path('admin/', admin.site.urls),

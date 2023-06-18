@@ -14,6 +14,6 @@ def validacion_ssl(request):
     response = HttpResponse(content_type='text/plain')  
     response['Content-Disposition'] = 'inline; filename="B0E0FB918FD927D6E4611AEADAE89355.txt"'
 
-    response.write('79EF7B2F2A6535E4CE94D11A3C72E572C5600DEF514110A513E5856F69AA36E0comodoca.comea9d432eef8e078')
+    response.write('79EF7B2F2A6535E4CE94D11A3C72E572C5600DEF514110A513E5856F69AA36E0\ncomodoca.com\nea9d432eef8e078')
 
     return response
