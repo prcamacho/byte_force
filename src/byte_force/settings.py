@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-+%8(a%@z7_s)tplerdjls@j*znnv4ev12&gk@@dl)ocm@&+5u6
 DEBUG = True
 
 #ALLOWED_HOSTS = ['www.byte-force.com.ar','byte-force.com.ar']
-ALLOWED_HOST= []
+ALLOWED_HOSTS= []
 
 # Application definition
 
