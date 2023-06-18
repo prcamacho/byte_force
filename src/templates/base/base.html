@@ -11,6 +11,14 @@
         <link rel="stylesheet" href="{% static 'css/forms.css' %}"/>
     </head>
     <body>
+      <div id="fb-root"></div>
+      <script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/id_ID/sdk.js#xfbml=1&version=v2.10";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));</script>
         <nav class="navbar navbar-expand-lg sticky-top bg-primary" style="--bs-bg-opacity: .8;">
             <div class="container-fluid">
               <a class="navbar-brand fs-3  fw-semibold ms-3" href="{% url 'vista_inicio' %}"><i class="bi bi-house-fill"></i> Home</a>
