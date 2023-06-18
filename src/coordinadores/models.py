@@ -1,7 +1,8 @@
 from typing import Any
 from django.db import models
+from django.contrib.auth.models import UserManager
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
-
+#from menu_empleado.models import MyUserManager
 class Coordinador(AbstractBaseUser):
     """
     Modelo para representar a un coordinador.
@@ -23,7 +24,7 @@ class Coordinador(AbstractBaseUser):
     empleado=models.BooleanField(default=True)
     fecha_alta = models.DateTimeField(auto_now_add=True)
     
-    USERNAME_FIELD = 'email'
+    objects = UserManager()
     
-    def __str__(self):
-        return f'{self.nombre} {self.apellido} {self.email}'
+    USERNAME_FIELD='email'
+    

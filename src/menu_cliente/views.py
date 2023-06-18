@@ -57,18 +57,20 @@ def modificar_cliente(request):
     Luego, se redirige a la página de listado de clientes.
 
     """
-    cliente = request.user
-    
-    if request.method == 'POST':
-        form = EditarFormCliente(request.POST, instance=cliente)
+    if request.user.is_authenticated and request.user.empleado == False:
         
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect("/menu")
+        cliente = request.user
+        
+        if request.method == 'POST':
+            form = EditarFormCliente(request.POST, instance=cliente)
+            if form.is_valid():
+                form.save()
+                return HttpResponseRedirect("/menu")
+        else:
+            form = EditarFormCliente(instance=cliente)
+        return render(request, 'usuario/cliente/actualizar_datos.html', {'form': form})
     else:
-        form = EditarFormCliente(instance=cliente)
-    
-    return render(request, 'usuario/cliente/actualizar_datos.html', {'form': form})
+        return redirect('/menu/login')
 
 
 def log_in(request):

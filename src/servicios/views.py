@@ -1,5 +1,5 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render,redirect
 from django.contrib import messages
 from .models import Servicio
 from .forms import FormularioServicio, EditarFormularioServicio
@@ -14,18 +14,20 @@ def nuevo_servicio(request):
     Después de crear el servicio, redirige al listado de servicios.
 
     """
-    form = FormularioServicio()
-    if request.method == 'POST':
-        form = FormularioServicio(request.POST)
-        if form.is_valid():
-            cd = form.cleaned_data
-            Servicio.objects.create(nombre=cd['nombre'],
-                                    descripcion=cd['descripcion'],
-                                    precio=cd['precio']
-            )
-            messages.success(request, "Servicio agregado con éxito")
-            return HttpResponseRedirect("/servicios/listado")           
-    return render(request, 'servicios/nuevo.html', {'form': form})
+    if request.user.is_authenticated and request.user.empleado == True:
+        form = FormularioServicio()
+        if request.method == 'POST':
+            form = FormularioServicio(request.POST)
+            if form.is_valid():
+                cd = form.cleaned_data
+                Servicio.objects.create(nombre=cd['nombre'],
+                                        descripcion=cd['descripcion'],
+                                        precio=cd['precio']
+                )
+                return HttpResponseRedirect("/administracion/servicios/listado")           
+        return render(request, 'servicios/nuevo.html', {'form': form})
+    else:
+        return redirect('/administracion/login')
 
 def modificar_servicio(request, id):
     """
@@ -35,15 +37,18 @@ def modificar_servicio(request, id):
     Después de modificar el servicio, redirige al listado de servicios.
 
     """
-    servicio = get_object_or_404(Servicio, id=id)
-    if request.method == 'POST':
-        formulario = EditarFormularioServicio(request.POST, instance=servicio)
-        if formulario.is_valid():
-            formulario.save()
-            return HttpResponseRedirect("/servicios/listado")
+    if request.user.is_authenticated and request.user.empleado == True:
+        servicio = get_object_or_404(Servicio, id=id)
+        if request.method == 'POST':
+            formulario = EditarFormularioServicio(request.POST, instance=servicio)
+            if formulario.is_valid():
+                formulario.save()
+                return HttpResponseRedirect("/administracion/servicios/listado")
+        else:
+            formulario = EditarFormularioServicio(instance=servicio)
+            return render(request, 'servicios/nuevo.html', {'form': formulario}) 
     else:
-        formulario = EditarFormularioServicio(instance=servicio)
-        return render(request, 'servicios/nuevo.html', {'form': formulario}) 
+        return redirect('/administracion/login')
 
 def desactivar_servicio(request, pk):
     """
@@ -53,11 +58,14 @@ def desactivar_servicio(request, pk):
     Después de desactivar el servicio, redirige al listado de servicios.
 
     """
-    servicio = get_object_or_404(Servicio, id=pk)
-    if servicio.activo == True:
-        servicio.activo = False
-        servicio.save()
-    return HttpResponseRedirect("/servicios/listado")
+    if request.user.is_authenticated and request.user.empleado == True:
+        servicio = get_object_or_404(Servicio, id=pk)
+        if servicio.activo == True:
+            servicio.activo = False
+            servicio.save()
+        return HttpResponseRedirect("/administracion/servicios/listado")
+    else:
+        return redirect('/administracion/login')
 
 def activar_servicio(request, pk):
     """
@@ -67,11 +75,14 @@ def activar_servicio(request, pk):
     Después de activar el servicio, redirige al listado de servicios.
 
     """
-    servicio = get_object_or_404(Servicio, id=pk)
-    if servicio.activo == False:
-        servicio.activo = True
-        servicio.save()
-    return HttpResponseRedirect("/servicios/listado")
+    if request.user.is_authenticated and request.user.empleado == True:
+        servicio = get_object_or_404(Servicio, id=pk)
+        if servicio.activo == False:
+            servicio.activo = True
+            servicio.save()
+        return HttpResponseRedirect("/administracion/servicios/listado")
+    else:
+        return redirect('/administracion/login')
 
 def listado_servicios(request):
     """
@@ -80,5 +91,8 @@ def listado_servicios(request):
     Obtiene todos los servicios existentes y los muestra en la plantilla.
 
     """
-    servicios = Servicio.objects.all()
-    return render(request, 'servicios/listado.html', {'servicios': servicios})
+    if request.user.is_authenticated and request.user.empleado == True:
+        servicios = Servicio.objects.all()
+        return render(request, 'servicios/listado.html', {'servicios': servicios})
+    else:
+        return redirect('/administracion/login')

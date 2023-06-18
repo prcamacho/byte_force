@@ -90,8 +90,6 @@ TEMPLATES = [
     }
 ]
 
-AUTH_USER_MODEL= 'menu_empleado.models.MyUserManage'
-
 WSGI_APPLICATION = 'byte_force.wsgi.application'
 
 

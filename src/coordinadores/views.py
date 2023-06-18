@@ -16,10 +16,13 @@ def activar_coordinador(request, id):
     Devuelve:
     - Una respuesta HTTP redirigiendo al listado de coordinadores.
     """
-    coordinador_a_activar = get_object_or_404(Coordinador, id=id)
-    coordinador_a_activar.activo = True
-    coordinador_a_activar.save()
-    return redirect(reverse('coordinadores:listado_coordinadores'))
+    if request.user.is_authenticated and request.user.empleado == True:
+        coordinador_a_activar = get_object_or_404(Coordinador, id=id)
+        coordinador_a_activar.activo = True
+        coordinador_a_activar.save()
+        return redirect(reverse('coordinadores:listado_coordinadores'))
+    else:
+        return redirect('/administracion/login')
 
 def desactivar_coordinador(request, id):
     """
@@ -32,10 +35,13 @@ def desactivar_coordinador(request, id):
     Devuelve:
     - Una respuesta HTTP redirigiendo al listado de coordinadores.
     """
-    coordinador_a_desactivar = get_object_or_404(Coordinador, id=id)
-    coordinador_a_desactivar.activo = False
-    coordinador_a_desactivar.save()
-    return redirect(reverse('coordinadores:listado_coordinadores'))
+    if request.user.is_authenticated and request.user.empleado == True:
+        coordinador_a_desactivar = get_object_or_404(Coordinador, id=id)
+        coordinador_a_desactivar.activo = False
+        coordinador_a_desactivar.save()
+        return redirect(reverse('coordinadores:listado_coordinadores'))
+    else:
+        return redirect('/administracion/login')
 
 def listado_coordinadores(request):
     """
@@ -47,8 +53,11 @@ def listado_coordinadores(request):
     Devuelve:
     - Una respuesta HTTP renderizando el listado de coordinadores.
     """
-    coordinadores = Coordinador.objects.all()
-    return render(request, 'coordinadores/listado.html', {'coordinadores': coordinadores})
+    if request.user.is_authenticated and request.user.empleado == True:
+        coordinadores = Coordinador.objects.all()
+        return render(request, 'coordinadores/listado.html', {'coordinadores': coordinadores})
+    else:
+        return redirect('/administracion/login')
 
 def nuevo_coordinador(request):
     """
@@ -61,25 +70,26 @@ def nuevo_coordinador(request):
     Devuelve:
     - Una respuesta HTTP redirigiendo al listado de coordinadores.
     """
-    form = FormCoordinador()
-    mensaje = None
-    coordinador_nuevo = None
-    if request.method == 'POST':
-        form = FormCoordinador(request.POST)
-        if form.is_valid():
-            cd = form.cleaned_data
-            coordinador_nuevo = Coordinador.objects.create(
-                nombre=cd['nombre'],
-                apellido=cd['apellido'],
-                email=cd['email'],
-                dni=cd['dni']
-            )
-            messages.success(request, "Coordinador creado con éxito")
-            return HttpResponseRedirect("/coordinadores/listado")
-    else:
+    if request.user.is_authenticated and request.user.empleado == True:
         form = FormCoordinador()
-    
-    return render(request, 'coordinadores/nuevo.html', {'form': form})
+        mensaje = None
+        coordinador_nuevo = None
+        if request.method == 'POST':
+            form = FormCoordinador(request.POST)
+            if form.is_valid():
+                cd = form.cleaned_data
+                coordinador_nuevo = Coordinador.objects.create(
+                    nombre=cd['nombre'],
+                    apellido=cd['apellido'],
+                    email=cd['email'],
+                    dni=cd['dni']
+                )
+                return HttpResponseRedirect("/administracion/coordinadores/listado")
+        else:
+            form = FormCoordinador()
+        return render(request, 'coordinadores/nuevo.html', {'form': form})
+    else:
+        return redirect('/administracion/login')
 
 def modificar_coordinador(request, id):
     """
@@ -93,12 +103,15 @@ def modificar_coordinador(request, id):
     Devuelve:
     - Una respuesta HTTP redirigiendo al listado de coordinadores.
     """
-    coordinador = get_object_or_404(Coordinador, id=id)
-    if request.method == 'POST':
-        formulario = EditarFormCoordinador(request.POST, instance=coordinador)
-        if formulario.is_valid():
-            formulario.save()
-            return HttpResponseRedirect("/coordinadores/listado")
+    if request.user.is_authenticated and request.user.empleado == True:
+        coordinador = get_object_or_404(Coordinador, id=id)
+        if request.method == 'POST':
+            formulario = EditarFormCoordinador(request.POST, instance=coordinador)
+            if formulario.is_valid():
+                formulario.save()
+                return HttpResponseRedirect("/administracion/coordinadores/listado")
+        else:
+            formulario = EditarFormCoordinador(instance=coordinador)
+        return render(request, 'coordinadores/nuevo.html', {'form': formulario})
     else:
-        formulario = EditarFormCoordinador(instance=coordinador)
-    return render(request, 'coordinadores/nuevo.html', {'form': formulario})
+        return redirect('/administracion/login')

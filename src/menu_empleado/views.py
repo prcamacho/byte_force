@@ -1,8 +1,4 @@
-from django.shortcuts import render
-from django.contrib.auth.forms import AuthenticationForm
-from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse, HttpResponseRedirect
-from django.urls import reverse
+from django.shortcuts import render, redirect
 from django.contrib import messages
 from .backend import *
 from .forms import *
@@ -23,13 +19,23 @@ def log_in(request):
         if form.is_valid():
             email=form.cleaned_data.get('email')
             password=form.cleaned_data.get('password')
-            empleado=BackEndEmpleado().authenticate(request,email=email,password=password)
+            empleado=BackEndEmpleado().authenticate(request,email=email,password=password)   
             if empleado is not None:
                 login(request,empleado,backend='menu_empleado.backend.BackEndEmpleado')
-                return redirect('/clientes/listado')
+                return redirect('/administracion/clientes/listado')
             else:
                 messages.error(request,'Usuario o contraseña no válido')
         else:
             messages.error(request,'Usuario o contraseña no válido')        
     form=AuthEmpleado()
     return render(request,'login/login.html',{'form':form})
+
+def log_out(request):
+    """
+    Vista para cerrar la sesión de un cliente.
+
+    Se cierra la sesión y se redirige a la página de inicio.
+
+    """
+    logout(request)
+    return redirect("/administracion/login")

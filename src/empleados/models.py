@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 # Create your models here.
 from django.contrib.auth.models import UserManager,BaseUserManager
-from menu_empleado.models import MyUserManager
+#from menu_empleado.models import MyUserManager
 #Modelo del objeto Empleado
 
 # class MyUserManager(BaseUserManager):
@@ -45,19 +45,11 @@ class Empleado(AbstractBaseUser):
     is_admin=models.BooleanField(default=False)
     empleado=models.BooleanField(default=True)
     fecha_alta=models.DateTimeField(auto_now_add=True)
-    objects = MyUserManager()
-    
+        
+    objects = UserManager()    
+        
     USERNAME_FIELD='email'
-    REQUIRED_FIELDS=['nombre','apellido','dni']
-    
-    def __str__(self):
-        return f'{self.nombre} {self.apellido} {self.email}'
-    
-    def has_perm(self,perm,obj=None):
-        return self.is_admin
-    
-    def has_module_perms(self,app_label):
-        return True
+   
    
         
     
