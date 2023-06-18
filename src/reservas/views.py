@@ -17,17 +17,18 @@ def nueva_reserva(request):
             form=FormReserva(request.POST)
             if form.is_valid():
                 cd=form.cleaned_data
-                Reserva.objects.create(fecha_reserva=cd['fecha_reserva'],
+                reserva=Reserva.objects.create(fecha_reserva=cd['fecha_reserva'],
                                             cliente=cd['cliente'],
                                             responsable=cd['responsable'],
                                             empleado=cd['empleado'],
                                             servicio=cd['servicio'],
                                             precio=cd['precio']
                                             )
+                valor=reserva.servicio.precio
                 return HttpResponseRedirect("/administracion/reservas/listado")       
         else:
             form=FormReserva()
-        return render(request,'reservas/nuevo.html',{'form':form})
+        return render(request,'reservas/nuevo.html',{'form':form,'value':valor})
     else:
         return redirect('/administracion/login')
 
@@ -83,3 +84,4 @@ def eliminar_reserva(request, id):
         return redirect('reservas:listado_reservas')
     else:
         return redirect('/administracion/login')
+
