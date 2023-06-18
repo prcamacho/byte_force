@@ -1,0 +1,52 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block contenido %}
+
+<div class="text-center mt-4">
+  <div>
+    <img class="mb-4 w-10" src="{% static 'imagenes/logotransparente.png' %}">
+    <img class="mb-4 w-10" src="{% static 'imagenes/logoinicial.png' %}">
+  </div>
+</div>
+
+<div id="carouselExampleAutoplaying" class="carousel slide mt-4 " data-bs-ride="carousel">
+
+    <div class="carousel-inner">
+      <div class="carousel-item active ">
+        <img src="{% static 'imagenes/casamiento2.jpg' %}"  class="d-block w-10 mx-auto " alt="casamiento">         
+
+      </div>
+      <div class="carousel-item active ">
+        <img src="{% static 'imagenes/empresariales2.jpg' %}" class="d-block w-10 mx-auto " alt="empresariales">
+      </div>
+      <div class="carousel-item active ">
+        <img src="{% static 'imagenes/15anos2.jpg' %}" class="d-block w-10 mx-auto " alt="15 años">
+      </div>
+    </div>
+    <button class="carousel-control-prev " type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+  <div class="card text-center mt-4">
+    <div class="card-header">
+      Promoción
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">Vajilla sin cargo!</h5>
+      <p class="card-text">Reservando tu evento hasta el 10/07</p>
+      <a href="{% url 'menu:log_in' %}" class="btn btn-primary">Reserva aqui!!</a>
+    </div>
+    <div class="card-footer text-muted">
+      Quedan solo 2 dias de oferta
+    </div>
+  </div>
+
+
+{% endblock contenido %}

@@ -1,6 +1,8 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import UserManager,AbstractBaseUser
+# Create your models here.
 
+#Modelo del objeto Empleado
 
 class Empleado(AbstractBaseUser):
     """
@@ -25,7 +27,10 @@ class Empleado(AbstractBaseUser):
     dni = models.BigIntegerField(unique=True)
     numero_legajo = models.PositiveIntegerField(unique=True)
     activo = models.BooleanField(default=True)
+    empleado=models.BooleanField(default=True)
     fecha_alta = models.DateTimeField(auto_now_add=True)
+
+    objects = UserManager() 
 
     USERNAME_FIELD = 'email'
 

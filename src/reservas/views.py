@@ -12,38 +12,37 @@ def nueva_reserva(request):
     Si se envía el formulario de reserva y es válido, se crea la reserva y se redirige al listado de reservas.
 
     """
-    form = FormReserva()
-    
-    if request.method == 'POST':
-        form = FormReserva(request.POST)
-        print(form)
-        
-        if form.is_valid():
-            cd = form.cleaned_data
-            Reserva.objects.create(
-                fecha_reserva=cd['fecha_reserva'],
-                cliente=cd['cliente'],
-                responsable=cd['responsable'],
-                empleado=cd['empleado'],
-                servicio=cd['servicio'],
-                precio=cd['precio']
-            )
-            
-            messages.success(request, "Reserva agregada con éxito")
-            return HttpResponseRedirect("/reservas/listado")
-    
-    return render(request, 'reservas/nuevo.html', {'form': form})
-
+    if request.user.is_authenticated and request.user.empleado == True:
+        if request.method=='POST':
+            form=FormReserva(request.POST)
+            if form.is_valid():
+                cd=form.cleaned_data
+                Reserva.objects.create(fecha_reserva=cd['fecha_reserva'],
+                                            cliente=cd['cliente'],
+                                            responsable=cd['responsable'],
+                                            empleado=cd['empleado'],
+                                            servicio=cd['servicio'],
+                                            precio=cd['precio']
+                                            )
+                return HttpResponseRedirect("/administracion/reservas/listado")       
+        else:
+            form=FormReserva()
+        return render(request,'reservas/nuevo.html',{'form':form})
+    else:
+        return redirect('/administracion/login')
 
 def listado_reservas(request):
-    """
+    if request.user.is_authenticated and request.user.empleado == True:
+        """
     Vista para mostrar el listado de reservas.
 
     Se obtienen todas las reservas y se muestran en la página de listado de reservas.
 
     """
-    reservas = Reserva.objects.all()
-    return render(request, 'reservas/listado.html', {'reservas': reservas})
+        reservas = Reserva.objects.all()
+        return render(request, 'reservas/listado.html', {'reservas': reservas})
+    else:
+        return redirect('/administracion/login')
 
 
 def modificar_reserva(request, id):
@@ -55,19 +54,19 @@ def modificar_reserva(request, id):
     Luego, se redirige al listado de reservas.
 
     """
-    reserva = get_object_or_404(Reserva, id=id)
+    if request.user.is_authenticated and request.user.empleado == True:
+        reserva = get_object_or_404(Reserva, id=id)
+        if request.method == 'POST':
+            formulario = EditarFormReserva(request.POST, instance=reserva)
+            if formulario.is_valid():
+                formulario.save()
+                return HttpResponseRedirect("/administracion/reservas/listado")
     
-    if request.method == 'POST':
-        formulario = EditarFormReserva(request.POST, instance=reserva)
-        
-        if formulario.is_valid():
-            formulario.save()
-            return HttpResponseRedirect("/reservas/listado")
-    
+        else:
+            formulario = EditarFormReserva(instance=reserva)
+        return render(request, 'reservas/nuevo.html', {'form': formulario})
     else:
-        formulario = EditarFormReserva(instance=reserva)
-    
-    return render(request, 'reservas/nuevo.html', {'form': formulario})
+        return redirect('/administracion/login')
 
 
 def eliminar_reserva(request, id):
@@ -78,6 +77,9 @@ def eliminar_reserva(request, id):
     Luego, se redirige al listado de reservas.
 
     """
-    reserva = get_object_or_404(Reserva, id=id)
-    reserva.delete()
-    return redirect('reservas:listado_reservas')
+    if request.user.is_authenticated and request.user.empleado == True:
+        reserva = get_object_or_404(Reserva, id=id)
+        reserva.delete()
+        return redirect('reservas:listado_reservas')
+    else:
+        return redirect('/administracion/login')

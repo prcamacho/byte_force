@@ -26,8 +26,8 @@ SECRET_KEY = 'django-insecure-+%8(a%@z7_s)tplerdjls@j*znnv4ev12&gk@@dl)ocm@&+5u6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['www.byte-force.com.ar','byte-force.com.ar']
-
+#ALLOWED_HOSTS = ['www.byte-force.com.ar','byte-force.com.ar']
+ALLOWED_HOST= []
 
 # Application definition
 
@@ -47,11 +47,13 @@ INSTALLED_APPS = [
     'api',
     'rest_framework',
     'menu_cliente',
+    'menu_empleado'
 ]
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'menu_cliente.backend.BackEndCliente',
+    'menu_empleado.backend.BackEndEmpleado',
 ]
 
 MIDDLEWARE = [

@@ -24,13 +24,14 @@ urlpatterns = [
     path('',view=vista_inicio, name='vista_inicio'),
     path('home/',view=vista_inicio, name='vista_inicio'),
     path('admin/', admin.site.urls),
-    path('empleados/', include('empleados.urls', namespace='empleados')),
-    path('clientes/',include('clientes.urls',namespace='clientes')),
-    path('coordinadores/', include('coordinadores.urls',namespace='coordinadores')),
-    path('reservas/',include('reservas.urls',namespace='reservas')),
-    path('servicios/',include('servicios.urls',namespace='servicios')),
+    path('administracion/empleados/', include('empleados.urls', namespace='empleados')),
+    path('administracion/clientes/',include('clientes.urls',namespace='clientes')),
+    path('administracion/coordinadores/', include('coordinadores.urls',namespace='coordinadores')),
+    path('administracion/reservas/',include('reservas.urls',namespace='reservas')),
+    path('administracion/servicios/',include('servicios.urls',namespace='servicios')),
     path('api/',include('api.urls',namespace='api')),
     path('menu/',include('menu_cliente.urls')),
+    path('administracion/',include('menu_empleado.urls')),
     
 ]
 

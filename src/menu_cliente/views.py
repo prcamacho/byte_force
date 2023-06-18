@@ -57,18 +57,20 @@ def modificar_cliente(request):
     Luego, se redirige a la página de listado de clientes.
 
     """
-    cliente = request.user
-    
-    if request.method == 'POST':
-        form = EditarFormCliente(request.POST, instance=cliente)
+    if request.user.is_authenticated and request.user.empleado == False:
         
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect("/menu")
+        cliente = request.user
+        
+        if request.method == 'POST':
+            form = EditarFormCliente(request.POST, instance=cliente)
+            if form.is_valid():
+                form.save()
+                return HttpResponseRedirect("/menu")
+        else:
+            form = EditarFormCliente(instance=cliente)
+        return render(request, 'usuario/cliente/actualizar_datos.html', {'form': form})
     else:
-        form = EditarFormCliente(instance=cliente)
-    
-    return render(request, 'usuario/cliente/actualizar_datos.html', {'form': form})
+        return redirect('/menu/login')
 
 
 def log_in(request):
@@ -137,7 +139,7 @@ def desactivar_reserva(request,pk):
     return redirect ("/menu")    
 
 def modificar_reserva_user(request,id):
-    reserva = get_object_or_404(Reserva, id=id)
+    reserva = get_object_or_404(Reserva, id=id,cliente=request.user)
     if request.method == 'POST':
         formulario = FormReserva(request.POST, instance=reserva)
         if formulario.is_valid():
@@ -145,7 +147,7 @@ def modificar_reserva_user(request,id):
             return HttpResponseRedirect("/menu")
     else:
         formulario = FormReserva(instance=reserva)
-        return render(request, 'usuario/cliente/reserva.html', {'form': formulario}) 
+    return render(request, 'usuario/cliente/reserva.html', {'form': formulario}) 
     
 def hacer_reserva(request):
     form=FormReserva()
@@ -179,5 +181,4 @@ def hacer_reserva(request):
             return HttpResponseRedirect("/menu")       
     else:
         form=FormReserva()
-    
     return render(request,'usuario/cliente/reserva.html',{'form':form})    

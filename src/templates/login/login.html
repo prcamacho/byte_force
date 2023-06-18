@@ -1,0 +1,15 @@
+{% extends 'base/base.html' %}
+
+{% block contenido %}
+<div class="container-fluid" style="margin-top:30px">
+    <div class="container-fluid card w-75 bg-primary-subtle">
+    <h1 class="fs-1 text-center" style="margin-top:30px">Inicio Sesión</h1>
+<form action="" method="POST" onSubmit="aviso()">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="botones btn btn-success">LOGIN</button>
+</form>
+
+</div>
+</div>
+{% endblock contenido %}
