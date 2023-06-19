@@ -22,7 +22,7 @@ def activar_coordinador(request, id):
         coordinador_a_activar.save()
         return redirect(reverse('coordinadores:listado_coordinadores'))
     else:
-        return redirect('/administracion/login')
+        return redirect('/administracion/login/')
 
 def desactivar_coordinador(request, id):
     """
@@ -41,7 +41,7 @@ def desactivar_coordinador(request, id):
         coordinador_a_desactivar.save()
         return redirect(reverse('coordinadores:listado_coordinadores'))
     else:
-        return redirect('/administracion/login')
+        return redirect('/administracion/login/')
 
 def listado_coordinadores(request):
     """
@@ -57,7 +57,7 @@ def listado_coordinadores(request):
         coordinadores = Coordinador.objects.all()
         return render(request, 'coordinadores/listado.html', {'coordinadores': coordinadores})
     else:
-        return redirect('/administracion/login')
+        return redirect('/administracion/login/')
 
 def nuevo_coordinador(request):
     """
@@ -84,12 +84,12 @@ def nuevo_coordinador(request):
                     email=cd['email'],
                     dni=cd['dni']
                 )
-                return HttpResponseRedirect("/administracion/coordinadores/listado")
+                return HttpResponseRedirect("/administracion/coordinadores/listado/")
         else:
             form = FormCoordinador()
         return render(request, 'coordinadores/nuevo.html', {'form': form})
     else:
-        return redirect('/administracion/login')
+        return redirect('/administracion/login/')
 
 def modificar_coordinador(request, id):
     """
@@ -109,9 +109,9 @@ def modificar_coordinador(request, id):
             formulario = EditarFormCoordinador(request.POST, instance=coordinador)
             if formulario.is_valid():
                 formulario.save()
-                return HttpResponseRedirect("/administracion/coordinadores/listado")
+                return HttpResponseRedirect("/administracion/coordinadores/listado/")
         else:
             formulario = EditarFormCoordinador(instance=coordinador)
         return render(request, 'coordinadores/nuevo.html', {'form': formulario})
     else:
-        return redirect('/administracion/login')
+        return redirect('/administracion/login/')

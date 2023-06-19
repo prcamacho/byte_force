@@ -23,7 +23,7 @@ def registrar_cliente(request):
 
     """
     if request.user.is_authenticated and request.user.empleado == False:
-        return redirect('/menu')
+        return redirect('/menu/')
     
     form = FormCliente()
     
@@ -43,7 +43,7 @@ def registrar_cliente(request):
             
             if cliente is not None and cliente_reg.empleado == False:
                 login(request, cliente, backend='menu_cliente.backend.BackEndCliente')
-                return HttpResponseRedirect("/home")
+                return HttpResponseRedirect("/home/")
     
     return render(request, 'usuario/cliente/registro.html', {'form': form})
 
@@ -65,12 +65,12 @@ def modificar_cliente(request):
             form = EditarFormCliente(request.POST, instance=cliente)
             if form.is_valid():
                 form.save()
-                return HttpResponseRedirect("/menu")
+                return HttpResponseRedirect("/menu/")
         else:
             form = EditarFormCliente(instance=cliente)
         return render(request, 'usuario/cliente/actualizar_datos.html', {'form': form})
     else:
-        return redirect('/menu/login')
+        return redirect('/menu/login/')
 
 
 def log_in(request):
@@ -85,7 +85,7 @@ def log_in(request):
 
     """
     if request.user.is_authenticated and request.user.empleado == False:
-        return redirect("/menu")
+        return redirect("/menu/")
     
     else:
         if request.method == 'POST':
@@ -97,7 +97,7 @@ def log_in(request):
                 
                 if cliente is not None:
                     login(request,cliente,backend='menu_cliente.backend.BackEndCliente')
-                    return redirect("/menu") 
+                    return redirect("/menu/") 
                 else:
                     messages.error(request,'DNI no registrado o no válido por favor Registrese')
             else:
@@ -114,7 +114,7 @@ def log_out(request):
 
     """
     logout(request)
-    return redirect("/home")
+    return redirect("/home/")
 
 
 def reservas_user_cliente(request):
@@ -130,13 +130,13 @@ def reservas_user_cliente(request):
         return render(request, 'usuario/cliente/menu.html', {'reservas': reservas})
     
     else:
-        return redirect('/menu/login')
+        return redirect('/menu/login/')
     
 def desactivar_reserva(request,pk):
     reserva=get_object_or_404(Reserva,id=pk)
     reserva.activo=False
     reserva.save()
-    return redirect ("/menu")    
+    return redirect ("/menu/")    
 
 def modificar_reserva_user(request,id):
     reserva = get_object_or_404(Reserva, id=id,cliente=request.user)
@@ -144,7 +144,7 @@ def modificar_reserva_user(request,id):
         formulario = FormReserva(request.POST, instance=reserva)
         if formulario.is_valid():
             formulario.save()
-            return HttpResponseRedirect("/menu")
+            return HttpResponseRedirect("/menu/")
     else:
         formulario = FormReserva(instance=reserva)
     return render(request, 'usuario/cliente/reserva.html', {'form': formulario}) 
@@ -155,14 +155,15 @@ def hacer_reserva(request):
         form=FormReserva(request.POST)
         if form.is_valid():
             cd=form.cleaned_data
-            Reserva.objects.create(fecha_reserva=cd['fecha_reserva'],
+            reserva=Reserva.objects.create(fecha_reserva=cd['fecha_reserva'],
                                            cliente=request.user,
                                            responsable=cd['responsable'],
                                            empleado=cd['empleado'],
                                            servicio=cd['servicio'],
-                                           precio=cd['precio']
+                                           precio=0
                                            )
-            messages.success(request, "Reserva agregada con exito")
+            reserva.precio=reserva.servicio.precio
+            reserva.save()
             email=request.user.email
             nombre_apellido=request.user.nombre +" "+request.user.apellido
             asunto="Reserva registrada con éxito!!!"
@@ -174,11 +175,11 @@ def hacer_reserva(request):
                 'responsable':cd['responsable'],
                 'empleado':cd['empleado'],
                 'servicio':cd['servicio'],
-                'precio':cd['precio']
+                'precio':reserva.precio
             })
             mensaje=strip_tags(template)
             send_mail(asunto,mensaje,from_email,[to],html_message=template)
-            return HttpResponseRedirect("/menu")       
+            return HttpResponseRedirect("/menu/")       
     else:
         form=FormReserva()
     return render(request,'usuario/cliente/reserva.html',{'form':form})    

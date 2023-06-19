@@ -22,7 +22,7 @@ def log_in(request):
             empleado=BackEndEmpleado().authenticate(request,email=email,password=password)   
             if empleado is not None:
                 login(request,empleado,backend='menu_empleado.backend.BackEndEmpleado')
-                return redirect('/administracion/clientes/listado')
+                return redirect('/administracion/clientes/listado/')
             else:
                 messages.error(request,'Usuario o contraseña no válido')
         else:
@@ -38,4 +38,4 @@ def log_out(request):
 
     """
     logout(request)
-    return redirect("/administracion/login")
+    return redirect("/administracion/login/")

@@ -24,10 +24,10 @@ def nuevo_servicio(request):
                                         descripcion=cd['descripcion'],
                                         precio=cd['precio']
                 )
-                return HttpResponseRedirect("/administracion/servicios/listado")           
+                return HttpResponseRedirect("/administracion/servicios/listado/")           
         return render(request, 'servicios/nuevo.html', {'form': form})
     else:
-        return redirect('/administracion/login')
+        return redirect('/administracion/login/')
 
 def modificar_servicio(request, id):
     """
@@ -43,12 +43,12 @@ def modificar_servicio(request, id):
             formulario = EditarFormularioServicio(request.POST, instance=servicio)
             if formulario.is_valid():
                 formulario.save()
-                return HttpResponseRedirect("/administracion/servicios/listado")
+                return HttpResponseRedirect("/administracion/servicios/listado/")
         else:
             formulario = EditarFormularioServicio(instance=servicio)
             return render(request, 'servicios/nuevo.html', {'form': formulario}) 
     else:
-        return redirect('/administracion/login')
+        return redirect('/administracion/login/')
 
 def desactivar_servicio(request, pk):
     """
@@ -63,9 +63,9 @@ def desactivar_servicio(request, pk):
         if servicio.activo == True:
             servicio.activo = False
             servicio.save()
-        return HttpResponseRedirect("/administracion/servicios/listado")
+        return HttpResponseRedirect("/administracion/servicios/listado/")
     else:
-        return redirect('/administracion/login')
+        return redirect('/administracion/login/')
 
 def activar_servicio(request, pk):
     """
@@ -80,9 +80,9 @@ def activar_servicio(request, pk):
         if servicio.activo == False:
             servicio.activo = True
             servicio.save()
-        return HttpResponseRedirect("/administracion/servicios/listado")
+        return HttpResponseRedirect("/administracion/servicios/listado/")
     else:
-        return redirect('/administracion/login')
+        return redirect('/administracion/login/')
 
 def listado_servicios(request):
     """
@@ -95,4 +95,4 @@ def listado_servicios(request):
         servicios = Servicio.objects.all()
         return render(request, 'servicios/listado.html', {'servicios': servicios})
     else:
-        return redirect('/administracion/login')
+        return redirect('/administracion/login/')

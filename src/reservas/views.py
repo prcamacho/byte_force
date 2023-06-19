@@ -1,8 +1,9 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect,JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import FormReserva, EditarFormReserva
 from django.contrib import messages
 from .models import Reserva
+from servicios.models import Servicio
 
 # Create your views here.
 def nueva_reserva(request):
@@ -22,15 +23,16 @@ def nueva_reserva(request):
                                             responsable=cd['responsable'],
                                             empleado=cd['empleado'],
                                             servicio=cd['servicio'],
-                                            precio=cd['precio']
+                                            precio=0
                                             )
-                valor=reserva.servicio.precio
-                return HttpResponseRedirect("/administracion/reservas/listado")       
+                reserva.precio=reserva.servicio.precio
+                reserva.save()
+                return HttpResponseRedirect("/administracion/reservas/listado/")       
         else:
             form=FormReserva()
-        return render(request,'reservas/nuevo.html',{'form':form,'value':valor})
+        return render(request,'reservas/nuevo.html',{'form':form})
     else:
-        return redirect('/administracion/login')
+        return redirect('/administracion/login/')
 
 def listado_reservas(request):
     if request.user.is_authenticated and request.user.empleado == True:
@@ -43,7 +45,7 @@ def listado_reservas(request):
         reservas = Reserva.objects.all()
         return render(request, 'reservas/listado.html', {'reservas': reservas})
     else:
-        return redirect('/administracion/login')
+        return redirect('/administracion/login/')
 
 
 def modificar_reserva(request, id):
@@ -61,13 +63,13 @@ def modificar_reserva(request, id):
             formulario = EditarFormReserva(request.POST, instance=reserva)
             if formulario.is_valid():
                 formulario.save()
-                return HttpResponseRedirect("/administracion/reservas/listado")
+                return HttpResponseRedirect("/administracion/reservas/listado/")
     
         else:
             formulario = EditarFormReserva(instance=reserva)
         return render(request, 'reservas/nuevo.html', {'form': formulario})
     else:
-        return redirect('/administracion/login')
+        return redirect('/administracion/login/')
 
 
 def eliminar_reserva(request, id):
@@ -83,5 +85,5 @@ def eliminar_reserva(request, id):
         reserva.delete()
         return redirect('reservas:listado_reservas')
     else:
-        return redirect('/administracion/login')
+        return redirect('/administracion/login/')
 
