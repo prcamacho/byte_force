@@ -13,7 +13,7 @@
     {{ form.as_p }}
     <button type="submit" class="botones btn btn-success">Guardar</button>
 </form>
-<a href="/menu" class="botones btn btn-danger">Cancelar</a>
+<a href="{% url 'menu:reservas_user_cliente' %}" class="botones btn btn-danger">Cancelar</a>
 </div>
 </div>
 {% endblock contenido %}
