@@ -16,12 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .views import vista_inicio,validacion_ssl
+from .views import vista_inicio,validacion_ssl,invitados
 #Capturar error 404
 from django.conf.urls import handler404,handler400,handler500
 from.views import error_404, error_400
 urlpatterns = [
     path('.well-known/pki-validation/B0E0FB918FD927D6E4611AEADAE89355.txt',view=validacion_ssl,name='validacion ssl'),
+    path('eventos/nL87kM/',invitados,name='invitados'),
     path('',view=vista_inicio, name='vista_inicio'),
     path('home/',view=vista_inicio, name='vista_inicio'),
     path('admin/', admin.site.urls),

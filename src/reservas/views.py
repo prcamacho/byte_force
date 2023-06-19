@@ -84,3 +84,4 @@ def eliminar_reserva(request, id):
         return redirect('reservas:listado_reservas')
     else:
         return redirect('/administracion/login')
+
