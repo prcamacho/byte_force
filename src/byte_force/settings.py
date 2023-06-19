@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'api',
     'rest_framework',
     'menu_cliente',
-    'menu_empleado'
+    'menu_empleado',
+    'adicionales',
 ]
 
 AUTHENTICATION_BACKENDS = [

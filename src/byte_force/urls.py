@@ -33,6 +33,7 @@ urlpatterns = [
     path('api/',include('api.urls',namespace='api')),
     path('menu/',include('menu_cliente.urls')),
     path('administracion/',include('menu_empleado.urls')),
+    path('adicionales/',include('adicionales.urls',namespace='adicionales')),
     
 ]
 
