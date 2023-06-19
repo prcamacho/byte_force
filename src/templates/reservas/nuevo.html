@@ -1,28 +1,27 @@
 {% extends 'base/base.html' %}
 {% block javascript %}
-<script>
-  //Cuadro de diálogo de confirmación en JavaScript
-  function aviso() {
-    alert("Reserva agregado con éxito!!!");
-  }
-</script>
+    <script>
+    </script> 
+    
 {% endblock javascript %}
 {% block contenido %}
 <div class="container-fluid" style="margin-top:30px">
     <div class="container-fluid card w-75 bg-primary-subtle">
         <h1 class="fs-1 text-center" style="margin-top:30px">Reserva</h1>
-        <form action="" method="POST" onSubmit="aviso()">
+        <form action="" method="POST">
             {% csrf_token %}
-            <div class="form-group">
+            {{form.as_p}}
+            
+            {% comment %} <div class="form-group">
                 <label for="{{ form.fecha_reserva.id_for_label }}">Fecha de reserva:</label>
                 {{ form.fecha_reserva }}
                 {% if form.fecha_reserva.errors %}
                     <p class="text-danger">{{ form.fecha_reserva.errors }}</p>
                 {% endif %}
-            </div>
+            </div> {% endcomment %}
             <!-- Resto de los campos del formulario -->
 
-            <button type="submit" class="botones btn btn-success" {% if not form.is_valid %}disabled{% endif %}>Guardar</button>
+            <button type="submit" class="botones btn btn-success">Guardar</button>
         </form>
         <a href="{% url 'reservas:listado_reservas' %}"><button class="botones btn btn-primary  mb-5">Lista de Reservas</button></a>
     </div>

@@ -1,8 +1,9 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect,JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import FormReserva, EditarFormReserva
 from django.contrib import messages
 from .models import Reserva
+from servicios.models import Servicio
 
 # Create your views here.
 def nueva_reserva(request):
@@ -22,13 +23,14 @@ def nueva_reserva(request):
                                             responsable=cd['responsable'],
                                             empleado=cd['empleado'],
                                             servicio=cd['servicio'],
-                                            precio=cd['precio']
+                                            precio=0
                                             )
-                valor=reserva.servicio.precio
+                reserva.precio=reserva.servicio.precio
+                reserva.save()
                 return HttpResponseRedirect("/administracion/reservas/listado")       
         else:
             form=FormReserva()
-        return render(request,'reservas/nuevo.html',{'form':form,'value':valor})
+        return render(request,'reservas/nuevo.html',{'form':form})
     else:
         return redirect('/administracion/login')
 

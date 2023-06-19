@@ -16,12 +16,12 @@ class FormReserva(forms.Form):
     responsable = forms.ModelChoiceField(queryset=Coordinador.objects.filter(activo=True))
     empleado = forms.ModelChoiceField(queryset=Empleado.objects.filter(activo=True))
     servicio = forms.ModelChoiceField(queryset=Servicio.objects.filter(activo=True))
-    precio = forms.DecimalField(decimal_places=2, max_digits=10)
-
+    #precio = forms.DecimalField(decimal_places=2, max_digits=10, widget=forms.TextInput(attrs={'id': 'id_precio'}))
+    
 class EditarFormReserva(forms.ModelForm):
     class Meta:
         model = Reserva
-        fields = ['fecha_reserva', 'cliente', 'responsable', 'empleado', 'servicio', 'precio']
+        fields = ['fecha_reserva', 'cliente', 'responsable', 'empleado', 'servicio']
         widgets = {
             'fecha_reserva': forms.widgets.DateInput(attrs={'type': 'datetime-local'}),
         }

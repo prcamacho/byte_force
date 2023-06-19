@@ -20,4 +20,4 @@ class Servicio(models.Model):
 
         El formato de la cadena es el nombre del servicio.
         """
-        return f"{self.nombre}"
+        return f"{self.nombre.upper()} ${self.precio}"
