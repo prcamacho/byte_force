@@ -36,12 +36,12 @@ def nuevo_empleado(request):
                     dni=cd['dni'],
                     numero_legajo=cd['numero_legajo']
                 )
-                return HttpResponseRedirect("/administracion/empleados/listado")
+                return HttpResponseRedirect("/administracion/empleados/listado/")
         else:
             formulario = FormEmpleado()
         return render(request, 'empleados/nuevo.html', {"form": formulario})
     else:
-        return redirect('/administracion/login')
+        return redirect('/administracion/login/')
 
 def modificar_empleado(request, id):
     """
@@ -68,12 +68,12 @@ def modificar_empleado(request, id):
             formulario = EditarFormularioEmpleado(request.POST, instance=empleado)
             if formulario.is_valid():
                 formulario.save()
-                return HttpResponseRedirect("/administracion/empleados/listado")
+                return HttpResponseRedirect("/administracion/empleados/listado/")
         else:
             formulario = EditarFormularioEmpleado(instance=empleado)
         return render(request, 'empleados/nuevo.html', {'form': formulario})
     else:
-        return redirect('/administracion/login')
+        return redirect('/administracion/login/')
     
 def activar_empleado(request, id):
     """
@@ -96,9 +96,9 @@ def activar_empleado(request, id):
         if empleado.activo == False:
             empleado.activo = True
             empleado.save()
-        return HttpResponseRedirect("/administracion/empleados/listado")
+        return HttpResponseRedirect("/administracion/empleados/listado/")
     else:
-        return redirect('/administracion/login')
+        return redirect('/administracion/login/')
 
 def desactivar_empleado(request, pk):
     """
@@ -120,9 +120,9 @@ def desactivar_empleado(request, pk):
         empleado = get_object_or_404(Empleado, id=pk)
         empleado.activo = False
         empleado.save()
-        return HttpResponseRedirect("/administracion/empleados/listado")
+        return HttpResponseRedirect("/administracion/empleados/listado/")
     else:
-        return redirect('/administracion/login')
+        return redirect('/administracion/login/')
 
 
 def listado_empleados(request):
@@ -144,4 +144,4 @@ def listado_empleados(request):
         empleados = Empleado.objects.all()
         return render(request, 'empleados/listado.html', {'empleados': empleados})
     else:
-        return redirect('/administracion/login')
+        return redirect('/administracion/login/')

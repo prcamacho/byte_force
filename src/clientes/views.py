@@ -27,12 +27,12 @@ def nuevo_cliente(request):
                                         dni=cd['dni'],
                                         email=cd['email']
                                         )
-                return HttpResponseRedirect("/administracion/clientes/listado")       
+                return HttpResponseRedirect("/administracion/clientes/listado/")       
         else:
             form=FormCliente()
             return render(request,'clientes/nuevo.html',{'form':form})
     else:
-        return redirect('/administracion/login')        
+        return redirect('/administracion/login/')        
     
 
 def desactivar_cliente(request,id):
@@ -52,7 +52,7 @@ def desactivar_cliente(request,id):
         cliente_a_desactivar.save()
         return redirect(reverse('clientes:listado_clientes'))
     else:
-        return redirect('/administracion/login')
+        return redirect('/administracion/login/')
 
 def activar_cliente(request,id):
     if request.user.is_authenticated and request.user.empleado == True:   
@@ -61,7 +61,7 @@ def activar_cliente(request,id):
         cliente_a_desactivar.save()
         return redirect(reverse('clientes:listado_clientes'))
     else:
-        return redirect('/administracion/login')
+        return redirect('/administracion/login/')
 
 def listado_clientes(request):
     """
@@ -78,7 +78,7 @@ def listado_clientes(request):
         clientes=Cliente.objects.all()
         return render(request,'clientes/listado.html',{'clientes':clientes})
     else:
-        return redirect('/administracion/login')
+        return redirect('/administracion/login/')
 
 def modificar_cliente(request, id):
     """
@@ -97,9 +97,9 @@ def modificar_cliente(request, id):
             formulario = EditarFormCliente(request.POST, instance=cliente)
             if formulario.is_valid():
                 formulario.save()
-                return HttpResponseRedirect("/administracion/clientes/listado")
+                return HttpResponseRedirect("/administracion/clientes/listado/")
         else:
             formulario = EditarFormCliente(instance=cliente)
         return render(request, 'clientes/nuevo.html', {'form': formulario}) 
     else:
-        return redirect('/administracion/login')
+        return redirect('/administracion/login/')

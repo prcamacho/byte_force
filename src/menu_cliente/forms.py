@@ -49,7 +49,7 @@ class AuthCliente(forms.Form):
 class FormReserva(forms.ModelForm):
     class Meta:
         model= Reserva  
-        fields = ['fecha_reserva','responsable','empleado','servicio','precio']
+        fields = ['fecha_reserva','responsable','empleado','servicio']
         widgets = {
             'fecha_reserva':forms.widgets.DateInput(attrs={'type': 'datetime-local'}),
         }

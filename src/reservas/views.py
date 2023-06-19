@@ -27,12 +27,12 @@ def nueva_reserva(request):
                                             )
                 reserva.precio=reserva.servicio.precio
                 reserva.save()
-                return HttpResponseRedirect("/administracion/reservas/listado")       
+                return HttpResponseRedirect("/administracion/reservas/listado/")       
         else:
             form=FormReserva()
         return render(request,'reservas/nuevo.html',{'form':form})
     else:
-        return redirect('/administracion/login')
+        return redirect('/administracion/login/')
 
 def listado_reservas(request):
     if request.user.is_authenticated and request.user.empleado == True:
@@ -45,7 +45,7 @@ def listado_reservas(request):
         reservas = Reserva.objects.all()
         return render(request, 'reservas/listado.html', {'reservas': reservas})
     else:
-        return redirect('/administracion/login')
+        return redirect('/administracion/login/')
 
 
 def modificar_reserva(request, id):
@@ -63,13 +63,13 @@ def modificar_reserva(request, id):
             formulario = EditarFormReserva(request.POST, instance=reserva)
             if formulario.is_valid():
                 formulario.save()
-                return HttpResponseRedirect("/administracion/reservas/listado")
+                return HttpResponseRedirect("/administracion/reservas/listado/")
     
         else:
             formulario = EditarFormReserva(instance=reserva)
         return render(request, 'reservas/nuevo.html', {'form': formulario})
     else:
-        return redirect('/administracion/login')
+        return redirect('/administracion/login/')
 
 
 def eliminar_reserva(request, id):
@@ -85,4 +85,4 @@ def eliminar_reserva(request, id):
         reserva.delete()
         return redirect('reservas:listado_reservas')
     else:
-        return redirect('/administracion/login')
+        return redirect('/administracion/login/')
