@@ -1,34 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% load static %}
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Confirmación de reserva</title>
+    <style>
+        body {
+            font-family: 'Verdana', sans-serif;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            width: 90%;
+            margin: auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 24px;
+            text-align: center;
+            text-transform: uppercase;
+            color: #333333;
+            font-family: sans-serif;
+            margin-bottom: 20px;
+        }
+        
+        h2 {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333333;
+            margin-top: 20px;
+        }
+        
+        p {
+            color: #666666;
+            line-height: 1.5;
+            font-size: 16px;
+            margin-bottom: 10px;
+            
+        }
+        
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+            margin-top: 10px;
+            border: 2px double #333333;
+            border-radius: 8px;
+            padding: 10px;
+        }
+        
+        li {
+            margin-bottom: 5px;
+        }
+        
+        .important {
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .price-label {
+            font-size: 19px;
+            font-weight: bold;
+            color: #ff0000;
+            text-align: center;
+        }
+        
+        .price-value {
+            font-size: 19px;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .link {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .link:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <div style='width:90%; height:auto;display:block;justify-content:center; margin:auto; padding:20px'>
-        <h1 style="font-size:2em; text-align:center;width:100%;text-align:center;text-transform: uppercase;">
-            {{nombre}}, <br>GRACIAS por tu reserva!
-        </h1><br>
-        <p>Hola, {{nombre}}!!! <br>Muchas gracias por hacer tu reserva por BYTE FORCE <br>
-        A continuación te dejamos los detalles.<br>
-        </p>
+    <div class="container">
+        <h1>{{nombre}},<br>¡Gracias por tu reserva!</h1>
+        
+        <h2>Hola, <span class="important">{{nombre}}</span>,</h2>
+        
+        <p>Muchas gracias por hacer tu reserva por BYTE FORCE. A continuación te dejamos los detalles:</p>
 
-        <ul style="justify-content:center; align-items:center;">
-            <li>Fecha de la reserva: {{fecha_reserva}}</li>
-            <li>Datos del Coordinador: {{responsable}}</li>
-            <li>Datos del Empleado: {{empleado}}</li>
-            <li>Datos del Servicio: {{servicio}}</li>
-            <li>Precio del Servico: {{precio}}</li>
+        <ul>
+            <li><span class="important">Fecha de la reserva:</span> {{fecha_reserva}}</li>
+            <li><span class="important">Datos del Coordinador:</span> {{responsable}}</li>
+            <li><span class="important">Datos del Empleado:</span> {{empleado}}</li>
+            <li><span class="important">Datos del Servicio:</span> {{servicio}}</li>
+            <li>
+                <div class="price-label">Precio del Servicio:</div>
+                <div class="price-value">{{precio}}</div></li>
+            <l1>
+                <p>Agradecemos y valoramos tu tiempo y como tenemos muchas ganas de seguir creciendo, te pedimos unos minutos para que puedas dejar tu opinión sobre este proyecto y nuestra presentación en el siguiente <a class="link" href="https://byte-force.com.ar/eventos/nL87kM/">enlace</a>.</p>
+
+            </li>
         </ul>
 
-        <p>Agradecemos y valoramos tu tiempo y como tenemos muchas ganas de seguir creciendo<br>
-            te pedimos unos minutos para que puedas dejar tu opinion sobre este proyecto y <br>
-            nuestra presentacion en el siguiente link: <a href="https://byte-force.com.ar/eventos/nL87kM/">https://byte-force.com.ar/eventos/nL87kM/</a></p>
-        <p style="text-align:right">Atte. El equipo de BYTE FORCE</p>
-    
+        <p>Atte. El equipo de BYTE FORCE</p>
     </div>
 </body>
 </html>
