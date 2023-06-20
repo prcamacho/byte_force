@@ -1,6 +1,25 @@
 {% extends 'base/base_cliente.html' %}
 {% block contenido %} 
 
+{% block javascript %}
+
+<script> 
+ 
+    function confirmar(){
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Reserva realizada con éxito!!!',
+            showConfirmButton: false,
+            timer: 1500
+          })
+    }
+
+</script>
+
+{% endblock javascript %}
+
+
 {% if user.is_authenticated %}
 <h1>Hola,{{user.nombre}}!!!</h1>
 {% endif %}
@@ -8,11 +27,13 @@
 <div class="container-fluid" style="margin-top:30px">
     <div class="container-fluid card w-75 bg-primary-subtle">
 <h1 class="fs-1 text-center" style="margin-top:30px">Cliente</h1>
-<form method="POST" action=""  onSubmit="aviso()">
+<form method="POST" action=""  onSubmit="confirmar()">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit" class="botones btn btn-success">Confirmar</button>
 </form>
+  
+   
     <a href="{% url 'menu:reservas_user_cliente' %}" class="botones btn btn-danger">Cancelar</a>
 </div>
 </div>

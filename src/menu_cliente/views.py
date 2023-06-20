@@ -11,7 +11,7 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.core.mail import send_mail
 from django.conf import settings
-
+import time
 # Create your views here.
 def registrar_cliente(request):
     """
@@ -43,6 +43,7 @@ def registrar_cliente(request):
             
             if cliente is not None and cliente_reg.empleado == False:
                 login(request, cliente, backend='menu_cliente.backend.BackEndCliente')
+                time.sleep(1.5)
                 return HttpResponseRedirect("/home/")
     
     return render(request, 'usuario/cliente/registro.html', {'form': form})
@@ -65,6 +66,7 @@ def modificar_cliente(request):
             form = EditarFormCliente(request.POST, instance=cliente)
             if form.is_valid():
                 form.save()
+                time.sleep(1.5)
                 return HttpResponseRedirect("/menu/")
         else:
             form = EditarFormCliente(instance=cliente)
@@ -144,6 +146,7 @@ def modificar_reserva_user(request,id):
         formulario = FormReserva(request.POST, instance=reserva)
         if formulario.is_valid():
             formulario.save()
+            time.sleep(2)
             return HttpResponseRedirect("/menu/")
     else:
         formulario = FormReserva(instance=reserva)
@@ -179,6 +182,7 @@ def hacer_reserva(request):
             })
             mensaje=strip_tags(template)
             send_mail(asunto,mensaje,from_email,[to],html_message=template)
+            time.sleep(1.5)
             return HttpResponseRedirect("/menu/")       
     else:
         form=FormReserva()

@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.contrib import messages
 from .models import Cliente
 from .forms import FormCliente, EditarFormCliente
+import time
 
 def nuevo_cliente(request):
     """
@@ -27,6 +28,7 @@ def nuevo_cliente(request):
                                         dni=cd['dni'],
                                         email=cd['email']
                                         )
+                time.sleep(1.5)
                 return HttpResponseRedirect("/administracion/clientes/listado/")       
         else:
             form=FormCliente()
@@ -97,6 +99,7 @@ def modificar_cliente(request, id):
             formulario = EditarFormCliente(request.POST, instance=cliente)
             if formulario.is_valid():
                 formulario.save()
+                time.sleep(1.5)
                 return HttpResponseRedirect("/administracion/clientes/listado/")
         else:
             formulario = EditarFormCliente(instance=cliente)

@@ -1,14 +1,24 @@
 {% extends 'base/base.html' %}
 {% block javascript %}
 <script> 
-  //Cuadro de diálogo de confirmación en JavaScript
-  function Confirmar(id)
-  {
-    var con=confirm("¿Está seguro que desea eliminar la Reserva?\n Una vez eliminada, no es posible recuperar la información");
-    if (con){
-      window.location.href = "../eliminar/"+id
+ 
+    function eliminar(id){
+      Swal.fire({
+        "title": "Eliminar Reserva?",
+        "text": "Una vez eliminado, no es posible recuperar la información!!!",
+        "icon": "warning",
+        "showCancelButton": true,
+        "cancelButtonText": "Cancelar",
+        "confirmButtonText": "Eliminar",
+        "reverseButtons": true,
+        "confirmButtonColor": "#dc3545"
+      }).then(function(result){
+        if(result.isConfirmed){
+          window.location.href = "../eliminar/"+id+"/"
+        }
+      })
     }
-  }
+
 </script>
 {% endblock javascript %}
 
@@ -43,7 +53,7 @@
         <th class="fs-6  fw-semibold">{{reserva.servicio}}</th>
         <th class="fs-6  fw-semibold">{{reserva.precio}}</th>
         <th>
-            <a href="javascript:Confirmar({{reserva.id}});"><button type="button" class="btn btn-danger rounded-start-pill"><i class="bi bi-trash3-fill"></i> Eliminar</button></a>
+            <button type="button" class="btn btn-danger rounded-start-pill" onClick="eliminar({{reserva.id}})"><i class="bi bi-trash3-fill"></i> Eliminar</button>
             <a href="{% url 'reservas:modificar_reserva' reserva.id %}"><button type="button" class="btn btn-dark rounded-end-pill"><i class="bi bi-pencil-square"></i> Modificar</button></a>
         </th>
     </tr>
