@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, render,redirect
 from django.contrib import messages
 from .models import Servicio
 from .forms import FormularioServicio, EditarFormularioServicio
-
+import time
 # Create your views here.
 
 def nuevo_servicio(request):
@@ -24,6 +24,7 @@ def nuevo_servicio(request):
                                         descripcion=cd['descripcion'],
                                         precio=cd['precio']
                 )
+                time.sleep(1.5)
                 return HttpResponseRedirect("/administracion/servicios/listado/")           
         return render(request, 'servicios/nuevo.html', {'form': form})
     else:
@@ -43,6 +44,7 @@ def modificar_servicio(request, id):
             formulario = EditarFormularioServicio(request.POST, instance=servicio)
             if formulario.is_valid():
                 formulario.save()
+                time.sleep(1.5)
                 return HttpResponseRedirect("/administracion/servicios/listado/")
         else:
             formulario = EditarFormularioServicio(instance=servicio)

@@ -4,6 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from .models import Coordinador
 from django.contrib import messages
 from .forms import EditarFormCoordinador, FormCoordinador
+import time
 
 def activar_coordinador(request, id):
     """
@@ -84,6 +85,7 @@ def nuevo_coordinador(request):
                     email=cd['email'],
                     dni=cd['dni']
                 )
+                time.sleep(1.5)
                 return HttpResponseRedirect("/administracion/coordinadores/listado/")
         else:
             form = FormCoordinador()
@@ -109,6 +111,7 @@ def modificar_coordinador(request, id):
             formulario = EditarFormCoordinador(request.POST, instance=coordinador)
             if formulario.is_valid():
                 formulario.save()
+                time.sleep(1.5)
                 return HttpResponseRedirect("/administracion/coordinadores/listado/")
         else:
             formulario = EditarFormCoordinador(instance=coordinador)

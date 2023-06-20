@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="shortcut icon" href="{% static 'imagenes/logotransparente.ico' %}">
         <title>Alkemy Salta C1</title>
+        
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
         <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
         <link rel="stylesheet" href="{% static 'css/forms.css' %}"/>
@@ -14,13 +15,13 @@
     </head>
     <body>
       
-        <nav class="navbar navbar-expand-lg sticky-top bg-primary" style="--bs-bg-opacity: .7;">
+        <nav class="navbar navbar-expand-lg sticky-top bg-secondary" style="--bs-bg-opacity: 0.8;">
             <div class="container-fluid">
-              <a class="navbar-brand fs-3  fw-semibold ms-3" href="{% url 'vista_inicio' %}"><i class="bi bi-house-fill"></i> Home</a>
+              <a class="navbar-brand fs-3  fw-semibold ms-3 fw-bold text-light" href="{% url 'vista_inicio' %}"><img style='width:70px' src="{% static 'imagenes/byteforcelogo.png' %}"> BYTE-FORCE</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
-              <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+              <div class="collapse navbar-collapse barra-navegacion-cliente" id="navbarNav">
                 <ul class="navbar-nav">
                   {% if user.is_authenticated %}
                   <li class="nav-item">
@@ -114,8 +115,9 @@
 
     <link rel="stylesheet" href="{% static 'js/bootstrap.min.js' %}"/>
     </body>
-    <script src="https://unpkg.com/@lottiefiles/lottie-player@0.4.0/dist/lottie-player.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    {% comment %} <script src="https://unpkg.com/@lottiefiles/lottie-player@0.4.0/dist/lottie-player.js"></script> {% endcomment %}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{% static 'js/utils/notificacion.js' %}"></script>
     {% block javascript %}
     
     {% endblock javascript %}
