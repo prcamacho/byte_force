@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        {% load static %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" href="{% static 'imagenes/logotransparente.png' %}">
+        <title>Sitio no encontrado</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/forms.css' %}"/>
+    </head>
+    <body>
+    <div class="d-flex justify-content-center align-items-center text-center">
+        <h1 class="display-1 fw-bold text-primary">PAGINA NO ENCONTRADA</h1>
+      </div>
+      
+      <div class="d-flex justify-content-center align-items-center">
+        <div class="embed-responsive embed-responsive-16by9" style="max-width: 70%;">
+          <div class="embed-responsive-item">
+            <lottie-player
+              autoplay
+              loop
+              mode="normal"
+              src="https://lottie.host/43c70e18-a014-40af-aa00-5027f03a8ace/SUtzNDBhb2.json"
+            ></lottie-player>
+          </div>
+        </div>
+      </div>
+      
+      <div class="d-flex justify-content-center align-items-center text-center">
+        <h1 class="display-2 fw-bold text-uppercase text-secondary">ERROR INTERNO DEL SERVIDOR POR FAVOR INTENTE MAS TARDE</h1>
+      </div>
+      <a href="{% url 'vista_inicio' %}"> 
+        <div class="d-grid gap-2">
+          <button class="btn btn-primary" type="button">Volver al Inicio</button>
+        </div>
+      </a>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+      <link rel="stylesheet" href="{% static 'js/bootstrap.min.js' %}"/>
+      </body>
+      <script src="https://unpkg.com/@lottiefiles/lottie-player@0.4.0/dist/lottie-player.js"></script>
+      
+      {% block javascript %}
+      
+      {% endblock javascript %}
+  
+  </html>

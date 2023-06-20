@@ -19,7 +19,7 @@ from django.urls import path, include
 from .views import vista_inicio,validacion_ssl,invitados
 #Capturar error 404
 from django.conf.urls import handler404,handler400,handler500
-from.views import error_404, error_400
+from.views import error_404, error_400, error_500
 urlpatterns = [
     path('.well-known/pki-validation/B0E0FB918FD927D6E4611AEADAE89355.txt',view=validacion_ssl,name='validacion ssl'),
     path('eventos/nL87kM/',invitados,name='invitados'),
@@ -39,3 +39,4 @@ urlpatterns = [
 
 handler404 = error_404
 handler400 = error_400
+handler500 = error_500
