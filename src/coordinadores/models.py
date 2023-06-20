@@ -28,3 +28,5 @@ class Coordinador(AbstractBaseUser):
     
     USERNAME_FIELD='email'
     
+    def __str__(self):
+        return f'{self.nombre} {self.apellido}'
