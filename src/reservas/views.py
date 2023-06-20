@@ -4,6 +4,7 @@ from .forms import FormReserva, EditarFormReserva
 from django.contrib import messages
 from .models import Reserva
 from servicios.models import Servicio
+import time
 
 # Create your views here.
 def nueva_reserva(request):
@@ -27,6 +28,7 @@ def nueva_reserva(request):
                                             )
                 reserva.precio=reserva.servicio.precio
                 reserva.save()
+                time.sleep(1.5)
                 return HttpResponseRedirect("/administracion/reservas/listado/")       
         else:
             form=FormReserva()
@@ -63,6 +65,7 @@ def modificar_reserva(request, id):
             formulario = EditarFormReserva(request.POST, instance=reserva)
             if formulario.is_valid():
                 formulario.save()
+                time.sleep(1.5)
                 return HttpResponseRedirect("/administracion/reservas/listado/")
     
         else:
@@ -86,3 +89,4 @@ def eliminar_reserva(request, id):
         return redirect('reservas:listado_reservas')
     else:
         return redirect('/administracion/login/')
+

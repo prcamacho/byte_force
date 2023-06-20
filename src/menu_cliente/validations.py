@@ -8,9 +8,11 @@ def validar_fecha_posterior(fecha_reserva):
     if fecha_reserva < timezone.now():
         raise ValidationError("La fecha de reserva debe ser posterior a la fecha actual.")
     
-    fecha_reserva_date = fecha_reserva.date()
+    fecha_reserva_date = fecha_reserva
+    print(fecha_reserva_date)
     reservas_mismo_dia = Reserva.objects.filter(fecha_reserva__date=fecha_reserva_date)
-    
+    for reserva in reservas_mismo_dia:
+        print(reserva.fecha_reserva)
     if reservas_mismo_dia.exists():
         raise ValidationError("Ya existe una reserva para la fecha seleccionada.")
 

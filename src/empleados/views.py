@@ -4,7 +4,7 @@ from .formulario import FormEmpleado, EditarFormularioEmpleado
 from .models import Empleado
 from django.contrib import messages
 from django.forms import ModelForm
-
+import time
 
 def nuevo_empleado(request):
     """
@@ -36,6 +36,7 @@ def nuevo_empleado(request):
                     dni=cd['dni'],
                     numero_legajo=cd['numero_legajo']
                 )
+                time.sleep(1.5)
                 return HttpResponseRedirect("/administracion/empleados/listado/")
         else:
             formulario = FormEmpleado()
@@ -68,6 +69,7 @@ def modificar_empleado(request, id):
             formulario = EditarFormularioEmpleado(request.POST, instance=empleado)
             if formulario.is_valid():
                 formulario.save()
+                time.sleep(1.5)
                 return HttpResponseRedirect("/administracion/empleados/listado/")
         else:
             formulario = EditarFormularioEmpleado(instance=empleado)
