@@ -8,29 +8,28 @@
     <img class="mb-4 w-10" src="{% static 'imagenes/logoinicial2.png' %}">
   </div>
 </div>
-<div id="carouselExampleAutoplaying" class="carousel slide mt-4 " data-bs-ride="carousel">
-
-    <div class="carousel-inner">
-      <div class="carousel-item active ">
-        <img src="{% static 'imagenes/casamiento2.jpg' %}"  class="d-block w-10 mx-auto " alt="casamiento">         
-
-      </div>
-      <div class="carousel-item active ">
-        <img src="{% static 'imagenes/empresariales2.jpg' %}" class="d-block w-10 mx-auto " alt="empresariales">
-      </div>
-      <div class="carousel-item active ">
-        <img src="{% static 'imagenes/15anos2.jpg' %}" class="d-block w-10 mx-auto " alt="15 años">
-      </div>
+<div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{% static '/imagenes/casamientos_hd_2.png' %}" class="d-block w-100" alt="...">
     </div>
-    <button class="carousel-control-prev " type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
+    <div class="carousel-item">
+      <img src="{% static '/imagenes/quince_hd_3.png' %}" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static '/imagenes/empresariales_hd_3.png' %}" class="d-block w-100" alt="...">
+    </div>
   </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
 
   <div class="card text-center mt-4">
     <div class="card-header">
@@ -45,6 +44,20 @@
       Quedan solo 2 dias de oferta
     </div>
   </div>
+
+  <div class="card mx-auto" style="width: 100%;">
+    <div class="card-body">
+      <h5 class="card-title text-center">Confian en Nosotros:</h5>
+      <ul class="list-group list-group-horizontal">
+        <li class="list-group-item"><a href="https://www.salta.gob.ar/" target="_blank" class="btn btn-outline-light" role="button" data-bs-toggle="button"><img src="{% static 'imagenes/gobierno_2.png' %}" class="card-img-top" alt="Gobierno de Salta"></a></li>
+        <li class="list-group-item"><a href="https://www.alkemy.org/" target="_blank" class="btn btn-outline-light" role="button" data-bs-toggle="button"><img src="{% static 'imagenes/alkemy_2.png' %}" class="card-img-top" alt="Alkemy"></a></li>
+        <li class="list-group-item"><a href="http://www.economiasalta.gob.ar/conosalta/" target="_blank" class="btn btn-outline-light" role="button" data-bs-toggle="button"><img src="{% static 'imagenes/economia_2.png' %}" class="card-img-top" alt="Economia del Conocimiento"></a></li>
+      </ul>
+      <h6 class="card-title text-center">Tu Logo puede aparecer aqui!</h6>
+      <h6 class="card-title text-center">(Solo debes contratarnos)</h6>
+    </div>
+  </div>
+
 
 
 {% endblock contenido %}
