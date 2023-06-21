@@ -1,0 +1,50 @@
+{% extends 'base/base.html' %}
+
+{% block contenido %}
+
+<div class="container-fluid">
+  <h1 class="fs-1 text-center m-4">Lista de Adicionales</h1>
+
+  <a href="{% url 'adicionales:nuevo_adicional' %}" class="float-end m-2">
+    <button type="button" class="btn btn-primary rounded-5">
+      <i class="bi bi-person-fill-add"></i> Nuevo Adicional
+    </button>
+  </a>
+
+  <table class="table table-hover text-center">
+    <tbody>
+      <tr class="table-secondary fs-4 fw-semibold">
+        <td>ID</td>
+        <td>Nombre</td>
+        <td>Descripción</td>
+        <td>Precio</td>
+        <td>Acciones</td>
+      </tr>
+    
+      {% for adicional in adicionales %}
+        <tr class="align-text-bottom {% if adicional.activo %} table-success {% else %} table-danger {% endif %}">
+          <td class="fs-6 fw-semibold">{{adicional.id}}</td>
+          <td class="fs-6 fw-semibold">{{adicional.nombre}}</td>
+          <td class="fs-6 fw-semibold">{{adicional.descripcion}}</td>
+          <td class="fs-6 fw-semibold">{{adicional.precio}}</td>
+          <td>
+            {% if adicional.activo %}
+              <a href="{% url 'adicionales:desactivar_adicional' adicional.id %}" class="btn btn-danger rounded-start-pill">
+                <i class="bi bi-person-fill-slash"></i> Desactivar
+              </a>
+            {% else %}
+              <a href="{% url 'adicionales:activar_adicional' adicional.id %}" class="btn btn-success rounded-start-pill">
+                <i class="bi bi-person-fill-check"></i> Activar
+              </a>
+            {% endif %}
+            <a href="{% url 'adicionales:modificar_adicional' adicional.id %}" class="btn btn-dark rounded-end-pill">
+              <i class="bi bi-pencil-square"></i> Modificar
+            </a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock contenido %}
