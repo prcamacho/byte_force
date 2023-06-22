@@ -7,7 +7,7 @@
         Swal.fire({
             position: 'center',
             icon: 'success',
-            title: 'Cliente guardado con éxito!!!',
+            title: 'Datos actualizados con éxito!!!',
             showConfirmButton: false,
             timer: 1500
           })
@@ -16,16 +16,16 @@
 </script>
 
 {% endblock javascript %}
-{% block contenido %}
+{% block contenido %} 
+
 <div class="container-fluid" style="margin-top:30px">
     <div class="container-fluid card w-75 bg-primary-subtle">
-<h1 class="fs-1 text-center" style="margin-top:30px">Cliente</h1>
-<form method="POST"  enctype="multipart/form-data" onSubmit="confirmar()">
+<h1 class="fs-1 text-center" style="margin-top:30px">Empleado</h1>
+<form method="POST" enctype="multipart/form-data" action="" onSubmit="confirmar()">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit" class="botones btn btn-success">Guardar</button>
 </form>
-<a href="{% url 'clientes:listado_clientes' %}"><button class="botones btn btn-primary mb-5">Lista de Clientes</button></a>
 </div>
 </div>
 {% endblock contenido %}

@@ -1,30 +1,62 @@
 {% extends 'base/base_cliente.html' %}
 {% block contenido %}
-<div class="container">
-  <div class="d-flex justify-content-end">
-    <a href="{% url 'menu:hacer_reserva' %}" class="btn btn-success m-2" >Reservar</a>
-    <a href="{% url 'menu:modificar_cliente' %}" class="btn btn-danger m-2" >Modificar Datos</a>
-  </div>
+{% block javascript %}
+<script> 
+ 
+    function eliminar(id){
+      Swal.fire({
+        "title": "Eliminar Reserva?",
+        "text": "Una vez eliminado, no es posible recuperar la información!!!",
+        "icon": "warning",
+        "showCancelButton": true,
+        "cancelButtonText": "Cancelar",
+        "confirmButtonText": "Eliminar",
+        "reverseButtons": true,
+        "confirmButtonColor": "#dc3545"
+      }).then(function(result){
+        if(result.isConfirmed){
+          window.location.href = "../menu/eliminar/"+id+"/"
+        }
+      })
+    }
 
-  <div class="container">
+</script>
+{% endblock javascript %}
+
+
+<div class="container d-lg-flex ">
+
+  <div class="container-fluid card border-primary mt-4" style="width:18rem;">
+    <img src="{{ user.imagen.url }}" class="card-img-top"/>
+    <div class="card-body">
+      <h3 class="card-title">{{user.apellido}}, {{user.nombre}}</h3>
+      <p class="card-text">{{user.email}}</p>
+      <a href="{% url 'menu:modificar_cliente' %}" class="btn btn-danger m-2" >Modificar Datos</a>
+    </div>
+  </div>
+  
+  <div class="container-fluid d-block justify-content-center">
+    <a href="{% url 'menu:hacer_reserva' %}" class="btn btn-success botones" >Reservar</a>
     <table class="table table-hover text-center">
       <tbody>
-        <tr class="table-secondary fs-4  fw-semibold">
+        <tr class="table-dark fs-4  fw-semibold" style="opacity:0.7;">
           <td class="">Servicio</td>
           <td class="">Fecha de Reserva</td>
-          <td class="">Acciones</td>
         </tr>
         {% for reserva in reservas %}
-          <tr class="align-text-bottom">
+          <tr class="align-text-center table-success">
             <td class="fs-6  fw-semibold">{{reserva.servicio}}</td>
             <td class="fs-6  fw-semibold">{{reserva.fecha_reserva}}</td>
-            <td>
+          </tr>
+          <tr>
+            <td class="table-secondary fs-6  fw-semibold">Acciones:</td>
+            <td class="container d-flex justify-content-evenly">
               {% if reserva.activo %}
-                <a href="{% url 'menu:desactivar_reserva' reserva.id %}" class="btn btn-danger rounded-start">
-                  <i class="bi bi-clipboard2-x-fill"></i> Cancelar
-                </a>
+                <a onClick="eliminar({{reserva.id}})" class=" btn btn-danger rounded-start">
+                  <i class=" bi bi-clipboard2-x-fill"></i> Cancelar
+                </a> 
               {% endif %}
-                <a href="{% url 'menu:modificar_reserva_user' reserva.id %}" class="btn btn-dark" >Modificar Datos</a>
+                <a href="{% url 'menu:modificar_reserva_user' reserva.id %}" class=" btn btn-dark" >Modificar Datos</a>
             </td>
           </tr>
         {% endfor %}

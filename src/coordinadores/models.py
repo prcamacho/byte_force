@@ -20,6 +20,7 @@ class Coordinador(AbstractBaseUser):
     apellido = models.CharField(max_length=100)
     email = models.EmailField(max_length=100, unique=True)
     dni = models.BigIntegerField(unique=True)
+    imagen=models.ImageField(upload_to='coordinadores/',default='usuariopordefecto.png')
     activo = models.BooleanField(default=True)
     empleado=models.BooleanField(default=True)
     fecha_alta = models.DateTimeField(auto_now_add=True)
@@ -27,4 +28,7 @@ class Coordinador(AbstractBaseUser):
     objects = UserManager()
     
     USERNAME_FIELD='email'
+    
+    def __str__(self):
+        return f'{self.nombre} {self.apellido} {self.email}'
     

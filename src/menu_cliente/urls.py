@@ -11,7 +11,8 @@ urlpatterns = [
     path('login/',log_in,name='log_in'),    
     path('logout/',log_out,name='log_out'),
     path('',reservas_user_cliente,name='reservas_user_cliente'),
-    path('desactivar/<int:pk>/',desactivar_reserva,name='desactivar_reserva'),
+    path('eliminar/<int:pk>/',eliminar_reserva,name='eliminar_reserva'),
     path('editar/<int:id>/',modificar_reserva_user,name="modificar_reserva_user"),
     path('nuevo/',hacer_reserva,name='hacer_reserva'),
 ]
+

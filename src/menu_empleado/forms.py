@@ -11,3 +11,16 @@ from coordinadores.models import Coordinador
 class AuthEmpleado(forms.Form):
     email=forms.EmailField(label='Ingrese su Email')  
     password = forms.CharField(label="Password", widget=forms.PasswordInput, strip=False)
+
+class EditarEmpleado(forms.ModelForm):
+    class Meta:
+        try:
+            model=Coordinador
+        except:    
+            model=Empleado
+        fields = ("nombre","apellido","email","imagen")
+        
+class EdictarCoordinador(forms.ModelForm):
+    class Meta:
+        model=Coordinador
+        fields = ("nombre","apellido","email","imagen")        

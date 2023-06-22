@@ -19,11 +19,13 @@ class Cliente(AbstractBaseUser):
     apellido = models.CharField(max_length=100)
     email = models.EmailField(max_length=100, unique=True)
     dni = models.BigIntegerField(unique=True)
+    imagen=models.ImageField(upload_to='clientes/',default='usuariopordefecto.png')
     activo = models.BooleanField(default=True)
     fecha_alta = models.DateTimeField(auto_now_add=True)
     empleado=models.BooleanField(default=False)
     
     USERNAME_FIELD = 'dni'
+    
     
     def __str__(self):
         return f'{self.nombre} {self.apellido} {self.email}'
