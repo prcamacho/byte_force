@@ -56,8 +56,9 @@
                   <i class=" bi bi-clipboard2-x-fill"></i> Cancelar
                 </a> 
               {% endif %}
-                <a href="{% url 'menu:modificar_reserva_user' reserva.id %}" class=" btn btn-dark" >Modificar Datos</a>
-            </td>
+                <a href="{% url 'menu:modificar_reserva_user' reserva.id %}" class="btn btn-dark" >Modificar Datos</a>
+                <a href="https://link.mercadopago.com.ar/bienvenida" class="btn btn-info" >Pagar</a>
+              </td>
           </tr>
         {% endfor %}
       </tbody>
