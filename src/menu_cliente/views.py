@@ -28,17 +28,19 @@ def registrar_cliente(request):
     form = FormCliente()
     
     if request.method == 'POST':
-        form = FormCliente(request.POST)
+        form = FormCliente(request.POST, request.FILES)
         
         if form.is_valid():
             cd = form.cleaned_data
+            print(cd)
             cliente_reg = Cliente.objects.create(
                 nombre=cd['nombre'],
                 apellido=cd['apellido'],
                 dni=cd['dni'],
-                email=cd['email']
+                email=cd['email'],
+                imagen=cd['imagen']
             )
-            
+            print(cliente_reg.imagen.url)
             cliente = BackEndCliente().authenticate(request, dni=cliente_reg.dni)
             
             if cliente is not None and cliente_reg.empleado == False:
@@ -63,7 +65,7 @@ def modificar_cliente(request):
         cliente = request.user
         
         if request.method == 'POST':
-            form = EditarFormCliente(request.POST, instance=cliente)
+            form = EditarFormCliente(request.POST, request.FILES, instance=cliente)
             if form.is_valid():
                 form.save()
                 time.sleep(1.5)
@@ -134,10 +136,9 @@ def reservas_user_cliente(request):
     else:
         return redirect('/menu/login/')
     
-def desactivar_reserva(request,pk):
+def eliminar_reserva(request,pk):
     reserva=get_object_or_404(Reserva,id=pk)
-    reserva.activo=False
-    reserva.save()
+    reserva.delete()
     return redirect ("/menu/")    
 
 def modificar_reserva_user(request,id):

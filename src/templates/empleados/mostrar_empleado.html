@@ -1,0 +1,36 @@
+{% extends 'base/base.html' %}
+{% block contenido %}
+
+<div class="container card " style="max-width:40rem">
+      <img src="{{ empleado.imagen.url }}" class="card-img-auto mx-auto w-50" alt="..."/>
+    <div class="card-body mx-auto d-block text-center">
+      <h3 class="card-title">Empleado</h3>
+      <p class="card-text fst-italic fw-medium">Nombres: {{empleado.nombre}}</p>
+      <p class="card-text fst-italic fw-medium">Apellidos: {{empleado.apellido}}</p>
+      <p class="card-text fst-italic fw-medium">DNI: {{empleado.dni}}</p>
+      <p class="card-text fst-italic fw-medium">EMAIL: {{empleado.email}}</p>
+      <p class="card-text fst-italic fw-medium">Numero de Legajo: {{empleado.numero_legajo}}</p>
+      <p class="card-text fst-italic fw-medium">Fecha de Alta: {{empleado.fecha_alta}}</p>
+    </div>
+</div>  
+  
+  <div class="mt-5 container">
+    <h2>Lista de Actividades</h2>
+    <table class="table table-hover text-center">
+      <tbody>
+        <tr class="table-dark fs-4  fw-semibold" style="opacity:0.7;">
+          <td class="">Servicio</td>
+          <td class="">Fecha de Reserva</td>
+        </tr>
+        {% for reserva in reservas %}
+          <tr class="align-text-center table-success">
+            <td class="fs-6  fw-semibold">{{reserva.servicio}}</td>
+            <td class="fs-6  fw-semibold">{{reserva.fecha_reserva}}</td>
+          </tr>
+          {% endfor %}
+      </tbody>
+    </table>
+
+  </div>
+
+{% endblock contenido %}

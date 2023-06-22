@@ -5,6 +5,7 @@ from .models import Coordinador
 from django.contrib import messages
 from .forms import EditarFormCoordinador, FormCoordinador
 import time
+from reservas.models import Reserva
 
 def activar_coordinador(request, id):
     """
@@ -76,14 +77,15 @@ def nuevo_coordinador(request):
         mensaje = None
         coordinador_nuevo = None
         if request.method == 'POST':
-            form = FormCoordinador(request.POST)
+            form = FormCoordinador(request.POST,request.FILES,)
             if form.is_valid():
                 cd = form.cleaned_data
                 coordinador_nuevo = Coordinador.objects.create(
                     nombre=cd['nombre'],
                     apellido=cd['apellido'],
                     email=cd['email'],
-                    dni=cd['dni']
+                    dni=cd['dni'],
+                    imagen=cd['imagen']
                 )
                 time.sleep(1.5)
                 return HttpResponseRedirect("/administracion/coordinadores/listado/")
@@ -108,7 +110,7 @@ def modificar_coordinador(request, id):
     if request.user.is_authenticated and request.user.empleado == True:
         coordinador = get_object_or_404(Coordinador, id=id)
         if request.method == 'POST':
-            formulario = EditarFormCoordinador(request.POST, instance=coordinador)
+            formulario = EditarFormCoordinador(request.POST, request.FILES, instance=coordinador)
             if formulario.is_valid():
                 formulario.save()
                 time.sleep(1.5)
@@ -118,3 +120,11 @@ def modificar_coordinador(request, id):
         return render(request, 'coordinadores/nuevo.html', {'form': formulario})
     else:
         return redirect('/administracion/login/')
+    
+def mostrar_coordinador(request,id):
+    if request.user.is_authenticated and request.user.empleado == True:
+        coordinador=get_object_or_404(Coordinador,id=id)
+        eventos=Reserva.objects.filter(responsable=coordinador)   
+        return render(request, 'coordinadores/mostrar_coordinador.html',{'coordinador':coordinador,'eventos':eventos})
+    else:
+        return redirect('/administracion/login/')    

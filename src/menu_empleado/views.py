@@ -8,6 +8,7 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.core.mail import send_mail
 from django.conf import settings
+import time
 # Create your views here.
 
 def menu_administracion(request):
@@ -39,3 +40,18 @@ def log_out(request):
     """
     logout(request)
     return redirect("/administracion/login/")
+
+def modificar_empleado(request):
+    if request.user.is_authenticated and request.user.empleado == True:
+        empleado = request.user
+        if request.method == 'POST':
+            form = EditarEmpleado(request.POST, request.FILES, instance=empleado)
+            if form.is_valid():
+                form.save()
+                time.sleep(1.5)
+                return redirect("/administracion/")
+        else:
+            form = EditarEmpleado(instance=empleado)
+        return render(request, 'usuario/empleado/modificar_empleado.html', {'form': form})
+    else:
+        return redirect('/administracion/login/') 

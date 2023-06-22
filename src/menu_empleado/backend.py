@@ -7,7 +7,12 @@ from coordinadores.models import Coordinador
 
 
 class BackEndEmpleado(BaseBackend):
+    def __init__(self):
+        self.mail=None
+        self.conta=None
     def authenticate(self, request:HttpRequest , email=None, password=None):
+        BackEndEmpleado().mail=email
+        BackEndEmpleado().contra=password
         try:
             try:
                 user = Empleado.objects.get(email=email,password=password,activo=True)
@@ -15,18 +20,18 @@ class BackEndEmpleado(BaseBackend):
                 user = Coordinador.objects.get(email=email,password=password,activo=True)      
         except Coordinador.DoesNotExist:
                 Coordinador().set_password(password)
-                return None
+                return None  
         return user    
 
-    def get_user(self, user_id):
+    def get_user(self,user):
+        print(BackEndEmpleado().mail)
+        print(BackEndEmpleado().conta)
         try:
             try:
-                return Empleado.objects.get(pk=user_id)
-            except Empleado.DoesNotExist:
-                return None   
-        except:   
-            try:
-                return Coordinador.objects.get(pk=user_id)
-            except Coordinador.DoesNotExist:
-                return None     
+                user=Empleado.objects.get(pk=user)
+            except:    
+                user=Coordinador.objects.get(pk=user)
+        except Coordinador.DoesNotExist:
+                return None 
+        return user        
         

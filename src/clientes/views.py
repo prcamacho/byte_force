@@ -1,10 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.contrib import messages
 from .models import Cliente
 from .forms import FormCliente, EditarFormCliente
 import time
+
 
 def nuevo_cliente(request):
     """
@@ -20,16 +21,17 @@ def nuevo_cliente(request):
     if request.user.is_authenticated and request.user.empleado == True:
         form=FormCliente()
         if request.method=='POST':
-            form=FormCliente(request.POST)
+            form=FormCliente(request.POST, request.FILES)
             if form.is_valid():
                 cd=form.cleaned_data
                 Cliente.objects.create(nombre=cd['nombre'],
                                         apellido=cd['apellido'],
                                         dni=cd['dni'],
-                                        email=cd['email']
+                                        email=cd['email'],
+                                        imagen=cd['imagen']
                                         )
                 time.sleep(1.5)
-                return HttpResponseRedirect("/administracion/clientes/listado/")       
+                return HttpResponseRedirect(reverse_lazy('clientes:listado_clientes'))       
         else:
             form=FormCliente()
             return render(request,'clientes/nuevo.html',{'form':form})
@@ -96,7 +98,7 @@ def modificar_cliente(request, id):
     if request.user.is_authenticated and request.user.empleado == True:
         cliente = get_object_or_404(Cliente, id=id)
         if request.method == 'POST':
-            formulario = EditarFormCliente(request.POST, instance=cliente)
+            formulario = EditarFormCliente(request.POST, request.FILES,instance=cliente)
             if formulario.is_valid():
                 formulario.save()
                 time.sleep(1.5)
