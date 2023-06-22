@@ -30,7 +30,7 @@
             {% else %}
             <a href="{% url 'coordinadores:activar_coordinador' coordinador.id %}"><button type="button" class="btn btn-success rounded-start-pill"><i class="bi bi-person-fill-check"></i> Activar</button></a>
             {% endif %}
-            <a href="{% url 'coordinadores:modificar_coordinador' coordinador.id %}"><button type="button" class="btn btn-dark rounded-end-pill"><i class="bi bi-pencil-square"></i> Modificar</button></a>
+            <a href="{% url 'coordinadores:mostrar_coordinador' coordinador.id %}"><button type="button" class="btn btn-dark rounded-end-pill"><i class="bi bi-pencil-square"></i> Mostrar</button></a>
         </th>
     </tr>
 

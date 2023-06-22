@@ -17,7 +17,7 @@ def nuevo_servicio(request):
     if request.user.is_authenticated and request.user.empleado == True:
         form = FormularioServicio()
         if request.method == 'POST':
-            form = FormularioServicio(request.POST)
+            form = FormularioServicio(request.POST, request.FILES)
             if form.is_valid():
                 cd = form.cleaned_data
                 Servicio.objects.create(nombre=cd['nombre'],
@@ -41,7 +41,7 @@ def modificar_servicio(request, id):
     if request.user.is_authenticated and request.user.empleado == True:
         servicio = get_object_or_404(Servicio, id=id)
         if request.method == 'POST':
-            formulario = EditarFormularioServicio(request.POST, instance=servicio)
+            formulario = EditarFormularioServicio(request.POST, request.FILES, instance=servicio)
             if formulario.is_valid():
                 formulario.save()
                 time.sleep(1.5)

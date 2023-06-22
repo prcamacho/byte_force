@@ -12,4 +12,5 @@ urlpatterns = [
     path('listado/',listado_coordinadores,name='listado_coordinadores'),
     path('nuevo/',nuevo_coordinador,name='nuevo_coordinador'),
     path('modificar/<int:id>',modificar_coordinador,name='modificar_coordinador'),
+    path('mostrar/<int:id>',mostrar_coordinador,name='mostrar_coordinador'),
 ]

@@ -5,6 +5,7 @@ from .models import Empleado
 from django.contrib import messages
 from django.forms import ModelForm
 import time
+from reservas.models import Reserva
 
 def nuevo_empleado(request):
     """
@@ -26,7 +27,7 @@ def nuevo_empleado(request):
     """
     if request.user.is_authenticated and request.user.empleado == True:
         if request.method == "POST":
-            formulario = FormEmpleado(request.POST)
+            formulario = FormEmpleado(request.POST, request.FILES)
             if formulario.is_valid():
                 cd = formulario.cleaned_data
                 Empleado.objects.create(
@@ -66,7 +67,7 @@ def modificar_empleado(request, id):
     if request.user.is_authenticated and request.user.empleado == True:
         empleado = get_object_or_404(Empleado, id=id)
         if request.method == 'POST':
-            formulario = EditarFormularioEmpleado(request.POST, instance=empleado)
+            formulario = EditarFormularioEmpleado(request.POST, request.FILES, instance=empleado)
             if formulario.is_valid():
                 formulario.save()
                 time.sleep(1.5)
@@ -147,3 +148,12 @@ def listado_empleados(request):
         return render(request, 'empleados/listado.html', {'empleados': empleados})
     else:
         return redirect('/administracion/login/')
+    
+def mostrar_empleado(request,id):
+    if request.user.is_authenticated and request.user.empleado == True:
+        empleado=get_object_or_404(Empleado,id=id)
+        eventos=Reserva.objects.filter(empleado=empleado)   
+        return render(request, 'empleados/mostrar_empleado.html',{'empleado':empleado,'eventos':eventos})
+    else:
+        return redirect('/administracion/login/')    
+    

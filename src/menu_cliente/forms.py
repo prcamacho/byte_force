@@ -10,37 +10,46 @@ from coordinadores.models import Coordinador
 #VALIDACIONES
 from .validations import *
 
-class FormCliente(UserChangeForm):
-    password=None
-    class Meta:
-        model=Cliente
-        fields=[
-            'nombre',
-            'apellido',
-            'email',
-            'dni'
-        ]
-        labels={
-            'nombre':'Nombre',
-            'apellido':'Apellido',
-            'email':'Email',
-            'dni':'DNI'
-        }
-    def clean_dni(self):
-        dni=self.cleaned_data.get('dni')
-        validar_dni(dni)
-        return dni
+# class FormCliente(UserChangeForm):
+#     password=None
+#     class Meta:
+#         model=Cliente
+#         fields=[
+#             'nombre',
+#             'apellido',
+#             'email',
+#             'dni',
+#             'imagen',
+#         ]
+#         labels={
+#             'nombre':'Nombre',
+#             'apellido':'Apellido',
+#             'email':'Email',
+#             'dni':'DNI',
+#             'imagen':'Imagen'
+#         }
+        
+#     def clean_dni(self):
+#         dni=self.cleaned_data.get('dni')
+#         validar_dni(dni)
+#         return dni
 
-
+class FormCliente(forms.Form):
+    nombre=forms.CharField(max_length=100)
+    apellido=forms.CharField(max_length=100)
+    email=forms.EmailField()
+    dni=forms.IntegerField()
+    imagen=forms.ImageField(label='Imagen')
+    
 class EditarFormCliente(forms.ModelForm):
     class Meta:
         model = Cliente
-        fields = ["nombre","apellido","email","dni"]    
+        fields = ["nombre","apellido","email","dni","imagen"]    
     
-    def clean_dni(self):
-        dni=self.cleaned_data.get('dni')
-        validar_dni(dni)
-        return dni
+    # def clean_dni(self):
+    #     dni=self.cleaned_data.get('dni')
+    #     validar_dni(dni)
+    #     return dni
         
 class AuthCliente(forms.Form):
     dni=forms.IntegerField(label='Ingrese su DNI')   

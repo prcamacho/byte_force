@@ -35,7 +35,20 @@
                   <li class="nav-item">
                     <a class="nav-link fs-4 ms-2 text-dark{% if 'servicios' in request.path %}  bg-dark text-white rounded-1{% endif %}" href="{% url 'servicios:listado_servicios' %}">Servicios</a>
                   </li>
+                {% if user.is_authenticated %}
                 </ul>
+                <ul class="navbar-nav">
+                  <li class="nav-item">
+                     <a class="nav-link fs-4 ms-5 text-light">Hola, {{user.nombre}}</a> 
+                  </li>
+                  <li class="nav-item">
+                    <a class="btn btn-danger m-2 fs-5" style="opacity:1;" href="{% url 'administracion:log_out' %}">Logout</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{% url 'administracion:modificar_empleado' %}" class="btn btn-success m-2 fs-5" >Mis Datos</a>
+                  </li>
+                </ul> 
+                {% endif %} 
               </div>
             </div>
           </nav>

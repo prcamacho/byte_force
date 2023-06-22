@@ -18,8 +18,11 @@ from django.contrib import admin
 from django.urls import path, include
 from .views import vista_inicio,validacion_ssl,invitados
 #Capturar error 404
-from django.conf.urls import handler404,handler400,handler500,handler403
-from.views import error_404, error_400, error_500, error_403
+from django.conf.urls import handler404,handler400,handler500
+from.views import error_404, error_400, error_500 ,error_403
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     path('.well-known/pki-validation/B0E0FB918FD927D6E4611AEADAE89355.txt',view=validacion_ssl,name='validacion ssl'),
     path('eventos/nL87kM/',invitados,name='invitados'),
@@ -34,8 +37,13 @@ urlpatterns = [
     path('api/',include('api.urls',namespace='api')),
     path('menu/',include('menu_cliente.urls')),
     path('administracion/',include('menu_empleado.urls')),
+    path('contacto/',include('contacto.urls',namespace='contacto')),
     
 ]
+
+if settings.DEBUG:
+    urlpatterns+=static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
+    urlpatterns+=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
 
 handler404 = error_404
 handler400 = error_400

@@ -5,6 +5,7 @@ from django.contrib.auth.models import UserManager,AbstractBaseUser
 #Modelo del objeto Empleado
 
 class Empleado(AbstractBaseUser):
+
     """
     Modelo para representar un empleado.
 
@@ -26,6 +27,7 @@ class Empleado(AbstractBaseUser):
     email = models.EmailField(max_length=100, unique=True)
     dni = models.BigIntegerField(unique=True)
     numero_legajo = models.PositiveIntegerField(unique=True)
+    imagen=models.ImageField(upload_to='empleados/',default='usuariopordefecto.png')
     activo = models.BooleanField(default=True)
     empleado=models.BooleanField(default=True)
     fecha_alta = models.DateTimeField(auto_now_add=True)
